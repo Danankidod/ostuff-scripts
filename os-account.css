@@ -1,36 +1,61 @@
-/* ═══ OSTUFF AUTH PAGES ═══ */
-.os-auth-wrap{max-width:400px!important;margin:120px auto 60px!important;padding:0 24px!important;font-family:'Space Grotesk',sans-serif!important;background:#efece9}
-.os-auth-title{font:600 12px/1 'Space Grotesk',sans-serif!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#1a1a1a!important;margin:0 0 32px!important;font-size:12px!important}
-.os-auth-form{display:flex!important;flex-direction:column!important;gap:16px!important}
-.os-auth-label{font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important;text-transform:uppercase!important;color:#999!important;margin-bottom:4px!important;display:block!important}
-.os-auth-input{width:100%!important;padding:12px 0!important;border:0!important;border-bottom:1px solid #ddd!important;font:400 11px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#1a1a1a!important;background:transparent!important;outline:0!important;transition:border-color .2s!important;border-radius:0!important;-webkit-appearance:none!important}
-.os-auth-input:focus{border-bottom-color:#1a1a1a!important}
-.os-auth-input::placeholder{color:#ccc!important}
-.os-auth-btn{width:100%!important;padding:14px!important;background:#1a1a1a!important;color:#efece9!important;border:0!important;font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;cursor:pointer!important;transition:background .2s!important;margin-top:8px!important;text-decoration:none!important;display:block!important;text-align:center!important}
-.os-auth-btn:hover{background:#333!important}
-.os-auth-link{font:400 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important;color:#999!important;text-decoration:none!important;text-transform:uppercase!important;transition:color .2s!important}
-.os-auth-link:hover{color:#1a1a1a!important}
-.os-auth-footer{margin-top:24px!important;text-align:center!important}
-.os-auth-error{color:#c0392b!important;font:400 10px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;margin:0!important;min-height:16px!important}
-.os-auth-success{display:none;text-align:center!important;padding:24px 0!important}
-.os-auth-success p{font:400 11px/1.6 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#555!important}
+/* ═══ OSTUFF AUTH PAGES — DARK THEME ═══ */
 
-/* ═══ ACCOUNT PAGE ═══ */
-.os-account-wrap{max-width:900px!important;margin:120px auto 60px!important;padding:0 24px!important;font-family:'Space Grotesk',sans-serif!important;background:#efece9}
-.os-account-header{display:flex!important;justify-content:space-between!important;align-items:center!important;margin-bottom:40px!important;padding-bottom:20px!important;border-bottom:1px solid #e0ddd8!important}
-.os-account-email{font:500 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important;color:#1a1a1a!important;text-transform:uppercase!important}
-.os-account-logout{background:none!important;border:1px solid #ddd!important;padding:8px 16px!important;font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important;text-transform:uppercase!important;cursor:pointer!important;color:#999!important;transition:all .2s!important}
-.os-account-logout:hover{border-color:#1a1a1a!important;color:#1a1a1a!important}
-.os-account-section-title{font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:#a09b93!important;margin:0 0 24px!important;font-size:11px!important}
+/* Force dark background on auth pages */
+body:has(#os-login-form),
+body:has(#os-signup-form),
+body:has(#os-account){background:#0a0a0a!important;color:#fff!important}
+body:has(#os-login-form) .section_products_,
+body:has(#os-signup-form) .section_products_,
+body:has(#os-account) .section_products_{background:#0a0a0a!important}
 
-/* ═══ BACKGROUND ═══ */
-body:has(.os-auth-wrap),body:has(.os-account-wrap){background:#efece9!important}
+/* Auth wrapper */
+.os-auth-wrap{max-width:380px!important;margin:0 auto!important;padding:0 24px!important;font-family:'Space Grotesk',sans-serif!important;min-height:100vh!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
+.os-auth-title{font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.22em!important;text-transform:uppercase!important;color:#fff!important;margin:0 0 40px!important;font-size:11px!important}
+.os-auth-form{display:flex!important;flex-direction:column!important;gap:24px!important}
+.os-auth-label{font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:#555!important;margin-bottom:6px!important;display:block!important}
+.os-auth-input{width:100%!important;padding:14px 0!important;border:0!important;border-bottom:1px solid #333!important;font:400 12px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#fff!important;background:transparent!important;outline:0!important;transition:border-color .3s!important;border-radius:0!important;-webkit-appearance:none!important;box-sizing:border-box!important}
+.os-auth-input:focus{border-bottom-color:#fff!important}
+.os-auth-input::placeholder{color:#333!important}
+.os-auth-btn{width:100%!important;padding:16px!important;background:#fff!important;color:#0a0a0a!important;border:0!important;font:600 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important;cursor:pointer!important;transition:all .2s!important;margin-top:12px!important;text-decoration:none!important;display:block!important;text-align:center!important}
+.os-auth-btn:hover{background:#a09b93!important;color:#0a0a0a!important}
+.os-auth-link{font:400 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;color:#555!important;text-decoration:none!important;text-transform:uppercase!important;transition:color .2s!important}
+.os-auth-link:hover{color:#fff!important}
+.os-auth-footer{margin-top:32px!important;text-align:center!important}
+.os-auth-error{color:#ff4444!important;font:400 9px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;margin:0!important;min-height:16px!important}
+.os-auth-success{display:none;text-align:center!important;padding:32px 0!important}
+.os-auth-success p{font:400 11px/1.6 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#a09b93!important}
+
+/* ═══ ACCOUNT PAGE — DARK ═══ */
+.os-account-wrap{max-width:900px!important;margin:0 auto!important;padding:120px 24px 60px!important;font-family:'Space Grotesk',sans-serif!important}
+.os-account-header{display:flex!important;justify-content:space-between!important;align-items:center!important;margin-bottom:48px!important;padding-bottom:20px!important;border-bottom:1px solid #1a1a1a!important}
+.os-account-email{font:500 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;color:#a09b93!important;text-transform:uppercase!important}
+.os-account-logout{background:none!important;border:1px solid #333!important;padding:8px 20px!important;font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;cursor:pointer!important;color:#555!important;transition:all .2s!important}
+.os-account-logout:hover{border-color:#fff!important;color:#fff!important}
+.os-account-section-title{font:600 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important;color:#a09b93!important;margin:0 0 24px!important;font-size:10px!important}
+
+/* Override Webflow heading defaults on these pages */
+body:has(#os-login-form) h1,body:has(#os-signup-form) h1,body:has(#os-account) h1{font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.22em!important;text-transform:uppercase!important;color:#fff!important;font-size:11px!important;margin:0 0 40px!important}
+body:has(#os-account) h2{font:600 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important;color:#a09b93!important;font-size:10px!important;margin:0 0 24px!important}
+
+/* Wishlist grid on account — dark */
+#os-account-wishlist a{color:#fff!important}
+#os-account-wishlist p{color:#a09b93!important}
+
+/* ═══ NAV ICONS ═══ */
+.os-nav-icons{display:flex;align-items:center;gap:16px;position:fixed;top:16px;right:24px;z-index:10001}
+.os-nav-icon{display:flex;align-items:center;gap:6px;text-decoration:none;color:#a09b93;font:500 9px/1 'Space Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;cursor:pointer;background:none;border:0;padding:0}
+.os-nav-icon:hover{color:#fff}
+.os-nav-icon svg{width:16px;height:16px}
+.os-wish-count{font:500 9px/1 'Space Grotesk',sans-serif;color:#a09b93}
 
 /* ═══ WISHLIST BUTTON ON CARDS ═══ */
-.os-wish-btn:hover{background:rgba(255,255,255,.95)!important;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.os-wish-btn{transition:all .2s!important}
+.os-wish-btn:hover{background:rgba(255,255,255,.95)!important;box-shadow:0 2px 8px rgba(0,0,0,.1)!important;transform:scale(1.1)!important}
 
 @media(max-width:767px){
-.os-auth-wrap{margin:80px auto 40px!important;padding:0 16px!important}
-.os-account-wrap{margin:80px auto 40px!important;padding:0 16px!important}
+.os-auth-wrap{padding:0 20px!important}
+.os-account-wrap{padding:80px 16px 40px!important}
 .os-account-header{flex-direction:column!important;gap:12px!important;align-items:flex-start!important}
+.os-nav-icons{top:10px;right:12px;gap:10px}
+.os-nav-icon span{display:none}
 }
