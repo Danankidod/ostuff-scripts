@@ -4,18 +4,16 @@
 body:has(#os-login-form),body:has(#os-signup-form),body:has(#os-account){background:#0a0a0a!important}
 body:has(#os-login-form) *,body:has(#os-signup-form) *,body:has(#os-account) *{box-sizing:border-box!important}
 
-/* ═══ LOGIN + SIGNUP FORMS ═══ */
-#os-login-form,#os-signup-form{
-  max-width:380px!important;margin:0 auto!important;padding:0 24px!important;
-  position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;
-  font-family:'Space Grotesk',sans-serif!important;width:100%!important
-}
-
-/* Title (parent of form) */
-#os-login-form-wrap,#os-login-form~div,#os-signup-form~div,
+/* ═══ LOGIN + SIGNUP — center everything ═══ */
 body:has(#os-login-form) section,body:has(#os-signup-form) section{
-  position:relative!important;min-height:100vh!important;background:#0a0a0a!important
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-height:100vh!important;background:#0a0a0a!important;padding:0!important
 }
+body:has(#os-login-form) section>div,body:has(#os-signup-form) section>div{
+  max-width:380px!important;width:100%!important;padding:0 24px!important;
+  font-family:'Space Grotesk',sans-serif!important;text-align:center!important
+}
+#os-login-form,#os-signup-form{text-align:left!important}
 
 /* Headings on auth pages */
 body:has(#os-login-form) h1,body:has(#os-signup-form) h1{
