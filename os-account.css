@@ -1,33 +1,36 @@
 /* ═══ OSTUFF AUTH PAGES ═══ */
-.os-auth-wrap{max-width:400px;margin:120px auto 60px;padding:0 24px;font-family:'Space Grotesk',sans-serif}
-.os-auth-title{font:600 14px/1 'Space Grotesk',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#1a1a1a;margin:0 0 32px}
-.os-auth-form{display:flex;flex-direction:column;gap:16px}
-.os-auth-label{font:500 9px/1 'Space Grotesk',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#999;margin-bottom:4px;display:block}
-.os-auth-input{width:100%;padding:12px 0;border:0;border-bottom:1px solid #ddd;font:400 12px/1.4 'Space Grotesk',sans-serif;letter-spacing:.06em;color:#1a1a1a;background:transparent;outline:0;transition:border-color .2s}
-.os-auth-input:focus{border-bottom-color:#1a1a1a}
-.os-auth-input::placeholder{color:#ccc}
-.os-auth-btn{width:100%;padding:14px;background:#1a1a1a;color:#efece9;border:0;font:500 9px/1 'Space Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:8px}
-.os-auth-btn:hover{background:#333}
-.os-auth-link{font:400 10px/1 'Space Grotesk',sans-serif;letter-spacing:.1em;color:#999;text-decoration:none;text-transform:uppercase;transition:color .2s}
-.os-auth-link:hover{color:#1a1a1a}
-.os-auth-footer{margin-top:24px;text-align:center}
-.os-auth-error{color:#c0392b;font:400 10px/1.4 'Space Grotesk',sans-serif;letter-spacing:.06em;margin:0;min-height:16px}
-.os-auth-success{display:none;text-align:center;padding:24px 0}
-.os-auth-success p{font:400 11px/1.6 'Space Grotesk',sans-serif;letter-spacing:.06em;color:#555}
+.os-auth-wrap{max-width:400px!important;margin:120px auto 60px!important;padding:0 24px!important;font-family:'Space Grotesk',sans-serif!important;background:#efece9}
+.os-auth-title{font:600 12px/1 'Space Grotesk',sans-serif!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#1a1a1a!important;margin:0 0 32px!important;font-size:12px!important}
+.os-auth-form{display:flex!important;flex-direction:column!important;gap:16px!important}
+.os-auth-label{font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important;text-transform:uppercase!important;color:#999!important;margin-bottom:4px!important;display:block!important}
+.os-auth-input{width:100%!important;padding:12px 0!important;border:0!important;border-bottom:1px solid #ddd!important;font:400 11px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#1a1a1a!important;background:transparent!important;outline:0!important;transition:border-color .2s!important;border-radius:0!important;-webkit-appearance:none!important}
+.os-auth-input:focus{border-bottom-color:#1a1a1a!important}
+.os-auth-input::placeholder{color:#ccc!important}
+.os-auth-btn{width:100%!important;padding:14px!important;background:#1a1a1a!important;color:#efece9!important;border:0!important;font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;cursor:pointer!important;transition:background .2s!important;margin-top:8px!important;text-decoration:none!important;display:block!important;text-align:center!important}
+.os-auth-btn:hover{background:#333!important}
+.os-auth-link{font:400 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important;color:#999!important;text-decoration:none!important;text-transform:uppercase!important;transition:color .2s!important}
+.os-auth-link:hover{color:#1a1a1a!important}
+.os-auth-footer{margin-top:24px!important;text-align:center!important}
+.os-auth-error{color:#c0392b!important;font:400 10px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;margin:0!important;min-height:16px!important}
+.os-auth-success{display:none;text-align:center!important;padding:24px 0!important}
+.os-auth-success p{font:400 11px/1.6 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#555!important}
 
 /* ═══ ACCOUNT PAGE ═══ */
-.os-account-wrap{max-width:900px;margin:120px auto 60px;padding:0 24px;font-family:'Space Grotesk',sans-serif}
-.os-account-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid #e0ddd8}
-.os-account-email{font:500 11px/1 'Space Grotesk',sans-serif;letter-spacing:.1em;color:#1a1a1a;text-transform:uppercase}
-.os-account-logout{background:none;border:1px solid #ddd;padding:8px 16px;font:500 8px/1 'Space Grotesk',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:#999;transition:all .2s}
-.os-account-logout:hover{border-color:#1a1a1a;color:#1a1a1a}
-.os-account-section-title{font:600 11px/1 'Space Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#a09b93;margin:0 0 24px}
+.os-account-wrap{max-width:900px!important;margin:120px auto 60px!important;padding:0 24px!important;font-family:'Space Grotesk',sans-serif!important;background:#efece9}
+.os-account-header{display:flex!important;justify-content:space-between!important;align-items:center!important;margin-bottom:40px!important;padding-bottom:20px!important;border-bottom:1px solid #e0ddd8!important}
+.os-account-email{font:500 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important;color:#1a1a1a!important;text-transform:uppercase!important}
+.os-account-logout{background:none!important;border:1px solid #ddd!important;padding:8px 16px!important;font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important;text-transform:uppercase!important;cursor:pointer!important;color:#999!important;transition:all .2s!important}
+.os-account-logout:hover{border-color:#1a1a1a!important;color:#1a1a1a!important}
+.os-account-section-title{font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:#a09b93!important;margin:0 0 24px!important;font-size:11px!important}
+
+/* ═══ BACKGROUND ═══ */
+body:has(.os-auth-wrap),body:has(.os-account-wrap){background:#efece9!important}
 
 /* ═══ WISHLIST BUTTON ON CARDS ═══ */
 .os-wish-btn:hover{background:rgba(255,255,255,.95)!important;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 
 @media(max-width:767px){
-.os-auth-wrap{margin:80px auto 40px;padding:0 16px}
-.os-account-wrap{margin:80px auto 40px;padding:0 16px}
-.os-account-header{flex-direction:column;gap:12px;align-items:flex-start}
+.os-auth-wrap{margin:80px auto 40px!important;padding:0 16px!important}
+.os-account-wrap{margin:80px auto 40px!important;padding:0 16px!important}
+.os-account-header{flex-direction:column!important;gap:12px!important;align-items:flex-start!important}
 }
