@@ -1,61 +1,136 @@
-/* ═══ OSTUFF AUTH PAGES — DARK THEME ═══ */
+/* ═══ OSTUFF AUTH — DARK THEME (ARObase LIVE style) ═══ */
 
-/* Force dark background on auth pages */
-body:has(#os-login-form),
-body:has(#os-signup-form),
-body:has(#os-account){background:#0a0a0a!important;color:#fff!important}
-body:has(#os-login-form) .section_products_,
-body:has(#os-signup-form) .section_products_,
-body:has(#os-account) .section_products_{background:#0a0a0a!important}
+/* Dark background on auth/account pages */
+body:has(#os-login-form),body:has(#os-signup-form),body:has(#os-account){background:#0a0a0a!important}
+body:has(#os-login-form) *,body:has(#os-signup-form) *,body:has(#os-account) *{box-sizing:border-box!important}
 
-/* Auth wrapper */
-.os-auth-wrap{max-width:380px!important;margin:0 auto!important;padding:0 24px!important;font-family:'Space Grotesk',sans-serif!important;min-height:100vh!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
-.os-auth-title{font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.22em!important;text-transform:uppercase!important;color:#fff!important;margin:0 0 40px!important;font-size:11px!important}
-.os-auth-form{display:flex!important;flex-direction:column!important;gap:24px!important}
-.os-auth-label{font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:#555!important;margin-bottom:6px!important;display:block!important}
-.os-auth-input{width:100%!important;padding:14px 0!important;border:0!important;border-bottom:1px solid #333!important;font:400 12px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#fff!important;background:transparent!important;outline:0!important;transition:border-color .3s!important;border-radius:0!important;-webkit-appearance:none!important;box-sizing:border-box!important}
-.os-auth-input:focus{border-bottom-color:#fff!important}
-.os-auth-input::placeholder{color:#333!important}
-.os-auth-btn{width:100%!important;padding:16px!important;background:#fff!important;color:#0a0a0a!important;border:0!important;font:600 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important;cursor:pointer!important;transition:all .2s!important;margin-top:12px!important;text-decoration:none!important;display:block!important;text-align:center!important}
-.os-auth-btn:hover{background:#a09b93!important;color:#0a0a0a!important}
-.os-auth-link{font:400 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;color:#555!important;text-decoration:none!important;text-transform:uppercase!important;transition:color .2s!important}
-.os-auth-link:hover{color:#fff!important}
-.os-auth-footer{margin-top:32px!important;text-align:center!important}
-.os-auth-error{color:#ff4444!important;font:400 9px/1.4 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;margin:0!important;min-height:16px!important}
-.os-auth-success{display:none;text-align:center!important;padding:32px 0!important}
-.os-auth-success p{font:400 11px/1.6 'Space Grotesk',sans-serif!important;letter-spacing:.06em!important;color:#a09b93!important}
+/* ═══ LOGIN + SIGNUP FORMS ═══ */
+#os-login-form,#os-signup-form{
+  max-width:380px!important;margin:0 auto!important;padding:0 24px!important;
+  position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;
+  font-family:'Space Grotesk',sans-serif!important;width:100%!important
+}
 
-/* ═══ ACCOUNT PAGE — DARK ═══ */
-.os-account-wrap{max-width:900px!important;margin:0 auto!important;padding:120px 24px 60px!important;font-family:'Space Grotesk',sans-serif!important}
-.os-account-header{display:flex!important;justify-content:space-between!important;align-items:center!important;margin-bottom:48px!important;padding-bottom:20px!important;border-bottom:1px solid #1a1a1a!important}
-.os-account-email{font:500 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;color:#a09b93!important;text-transform:uppercase!important}
-.os-account-logout{background:none!important;border:1px solid #333!important;padding:8px 20px!important;font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;cursor:pointer!important;color:#555!important;transition:all .2s!important}
-.os-account-logout:hover{border-color:#fff!important;color:#fff!important}
-.os-account-section-title{font:600 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important;color:#a09b93!important;margin:0 0 24px!important;font-size:10px!important}
+/* Title (parent of form) */
+#os-login-form-wrap,#os-login-form~div,#os-signup-form~div,
+body:has(#os-login-form) section,body:has(#os-signup-form) section{
+  position:relative!important;min-height:100vh!important;background:#0a0a0a!important
+}
 
-/* Override Webflow heading defaults on these pages */
-body:has(#os-login-form) h1,body:has(#os-signup-form) h1,body:has(#os-account) h1{font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.22em!important;text-transform:uppercase!important;color:#fff!important;font-size:11px!important;margin:0 0 40px!important}
-body:has(#os-account) h2{font:600 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;text-transform:uppercase!important;color:#a09b93!important;font-size:10px!important;margin:0 0 24px!important}
+/* Headings on auth pages */
+body:has(#os-login-form) h1,body:has(#os-signup-form) h1{
+  font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.22em!important;
+  text-transform:uppercase!important;color:#fff!important;margin:0 0 40px!important;
+  font-size:11px!important;text-align:center!important
+}
 
-/* Wishlist grid on account — dark */
-#os-account-wishlist a{color:#fff!important}
-#os-account-wishlist p{color:#a09b93!important}
+/* All labels */
+#os-login-form label,#os-signup-form label{
+  font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;
+  text-transform:uppercase!important;color:#555!important;display:block!important;margin:20px 0 8px!important
+}
+#os-login-form label:first-of-type,#os-signup-form label:first-of-type{margin-top:0!important}
+
+/* All inputs */
+#os-login-form input,#os-signup-form input{
+  width:100%!important;padding:14px 0!important;border:0!important;
+  border-bottom:1px solid #333!important;font:400 12px/1.4 'Space Grotesk',sans-serif!important;
+  letter-spacing:.06em!important;color:#fff!important;background:transparent!important;
+  outline:0!important;border-radius:0!important;-webkit-appearance:none!important;
+  display:block!important;transition:border-color .3s!important
+}
+#os-login-form input:focus,#os-signup-form input:focus{border-bottom-color:#fff!important}
+#os-login-form input::placeholder,#os-signup-form input::placeholder{color:#333!important}
+
+/* Submit button */
+#os-login-form button[type="submit"],#os-signup-form button[type="submit"]{
+  width:100%!important;padding:16px!important;background:#fff!important;color:#0a0a0a!important;
+  border:0!important;font:600 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;
+  text-transform:uppercase!important;cursor:pointer!important;transition:all .2s!important;
+  margin-top:28px!important;display:block!important
+}
+#os-login-form button[type="submit"]:hover,#os-signup-form button[type="submit"]:hover{
+  background:#a09b93!important
+}
+
+/* Error text */
+#os-login-error,#os-signup-error{
+  color:#ff4444!important;font:400 9px/1.4 'Space Grotesk',sans-serif!important;
+  letter-spacing:.06em!important;margin:12px 0 0!important;min-height:16px!important;
+  text-align:center!important
+}
+
+/* Footer link */
+#os-login-form~div a,#os-signup-form~div:last-child a,
+body:has(#os-login-form) a[href*="sign"],body:has(#os-login-form) a[href*="log"],
+body:has(#os-signup-form) a[href*="sign"],body:has(#os-signup-form) a[href*="log"]{
+  font:400 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;
+  color:#555!important;text-decoration:none!important;text-transform:uppercase!important;
+  transition:color .2s!important;display:block!important;text-align:center!important;
+  margin-top:32px!important
+}
+body:has(#os-login-form) a:hover,body:has(#os-signup-form) a:hover{color:#fff!important}
+
+/* Success message (signup) */
+#os-signup-success{display:none;text-align:center!important;padding:32px 0!important}
+#os-signup-success p{font:400 11px/1.6 'Space Grotesk',sans-serif!important;color:#a09b93!important;letter-spacing:.06em!important}
+#os-signup-success a{
+  display:inline-block!important;padding:16px 32px!important;background:#fff!important;
+  color:#0a0a0a!important;font:600 9px/1 'Space Grotesk',sans-serif!important;
+  letter-spacing:.18em!important;text-transform:uppercase!important;text-decoration:none!important;
+  margin-top:20px!important;transition:background .2s!important
+}
+#os-signup-success a:hover{background:#a09b93!important}
+
+/* Divblock wrappers — reset Webflow defaults */
+body:has(#os-login-form) div,body:has(#os-signup-form) div{background:transparent!important}
+
+/* ═══ ACCOUNT PAGE ═══ */
+#os-account{background:#0a0a0a!important;min-height:100vh!important;padding:120px 0 60px!important}
+#os-account>div{max-width:900px!important;margin:0 auto!important;padding:0 24px!important}
+
+/* Account header */
+body:has(#os-account) h1{
+  font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.22em!important;
+  text-transform:uppercase!important;color:#fff!important;font-size:11px!important;margin:0 0 8px!important
+}
+#os-account-email{
+  font:500 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;
+  color:#a09b93!important;text-transform:uppercase!important
+}
+#os-account-logout{
+  background:none!important;border:1px solid #333!important;padding:8px 20px!important;
+  font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;
+  text-transform:uppercase!important;cursor:pointer!important;color:#555!important;
+  transition:all .2s!important
+}
+#os-account-logout:hover{border-color:#fff!important;color:#fff!important}
+
+/* Wishlist title */
+body:has(#os-account) h2{
+  font:600 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.18em!important;
+  text-transform:uppercase!important;color:#a09b93!important;font-size:10px!important;
+  margin:48px 0 24px!important;padding-top:32px!important;border-top:1px solid #1a1a1a!important
+}
+
+/* Wishlist items */
+#os-account-wishlist a{color:#fff!important;text-decoration:none!important}
+#os-account-wishlist button:hover{border-color:#fff!important;color:#fff!important}
 
 /* ═══ NAV ICONS ═══ */
 .os-nav-icons{display:flex;align-items:center;gap:16px;position:fixed;top:16px;right:24px;z-index:10001}
 .os-nav-icon{display:flex;align-items:center;gap:6px;text-decoration:none;color:#a09b93;font:500 9px/1 'Space Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;cursor:pointer;background:none;border:0;padding:0}
 .os-nav-icon:hover{color:#fff}
 .os-nav-icon svg{width:16px;height:16px}
-.os-wish-count{font:500 9px/1 'Space Grotesk',sans-serif;color:#a09b93}
 
-/* ═══ WISHLIST BUTTON ON CARDS ═══ */
+/* ═══ WISHLIST HEART ON CARDS ═══ */
 .os-wish-btn{transition:all .2s!important}
 .os-wish-btn:hover{background:rgba(255,255,255,.95)!important;box-shadow:0 2px 8px rgba(0,0,0,.1)!important;transform:scale(1.1)!important}
 
 @media(max-width:767px){
-.os-auth-wrap{padding:0 20px!important}
-.os-account-wrap{padding:80px 16px 40px!important}
-.os-account-header{flex-direction:column!important;gap:12px!important;align-items:flex-start!important}
+#os-login-form,#os-signup-form{padding:0 20px!important}
+#os-account{padding:80px 0 40px!important}
+#os-account>div{padding:0 16px!important}
 .os-nav-icons{top:10px;right:12px;gap:10px}
 .os-nav-icon span{display:none}
 }
