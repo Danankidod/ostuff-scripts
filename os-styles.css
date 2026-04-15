@@ -2,8 +2,7 @@
 .nav,.nav_,.nav_center,.nav_menu-trigger,.title-nav,.full-menu_,.full-menu_links-container,.rock-container{display:none!important;height:0!important;overflow:hidden!important;pointer-events:none!important}
 /* Force native cursor — kill custom cursor component */
 .cursor_,.cursor_wrapper,.cursor_inner,.cursor_outer,[class*="cursor_"]{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;width:0!important;height:0!important}
-*,body,html,a,button,input,textarea,select{cursor:auto!important}
-a,button,[role="button"],.os-lk,.os-bk,.os-ar,.os-qc,input[type="submit"]{cursor:pointer!important}
+body{cursor:auto!important}
 .os-nav{position:fixed;top:52px;left:50%;transform:translateX(-50%);z-index:10000;width:min(700px,90vw);max-height:0;overflow:hidden;background:#0a0a0a;border:1px solid #1a1a1a;border-top:0;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0;border-radius:0 0 3px 3px}
 .os-nav.is-open{max-height:82vh;opacity:1;overflow-y:auto}
 .os-nav-in{padding:24px 28px}

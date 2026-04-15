@@ -146,16 +146,23 @@ function injectNavIcons(){
   cb.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span id="os-bar-cart-count" class="os-bar-count"></span>';
   cb.addEventListener('click',function(e){
     e.preventDefault();e.stopPropagation();
-    /* Directly toggle the Webflow cart container open state */
-    var container=document.querySelector('.w-commerce-commercecartcontainerwrapper');
-    if(container){container.classList.add('w--open');container.style.display='';container.style.opacity='1';container.style.pointerEvents='auto';return}
-    /* Fallback: find and click the original cart link */
-    var wf=document.querySelector('.w-commerce-commercecartwrapper');
-    if(wf){wf.click()}
+    /* Show the hidden cart link, click it with a real event, re-hide */
+    var link=document.querySelector('.w-commerce-commercecartwrapper');
+    if(link){
+      link.style.cssText='position:fixed;top:0;right:0;z-index:99999;opacity:1;pointer-events:auto;width:auto;height:auto;overflow:visible';
+      setTimeout(function(){
+        link.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+        setTimeout(function(){link.style.cssText='position:fixed;top:-9999px;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden'},200);
+      },50);
+    }
   });
   wrap.appendChild(cb);
   /* INSERT between SEARCH and TOGGLE — don't touch originals */
   if(tog){tog.parentNode.insertBefore(wrap,tog)}else{bar.appendChild(wrap)}
+  /* Hide the CART text link everywhere */
+  document.querySelectorAll('.w-commerce-commercecartwrapper').forEach(function(el){
+    el.style.cssText='position:fixed;top:-9999px;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden';
+  });
   /* Sync cart count */
   setInterval(function(){
     var wfC=document.querySelector('.w-commerce-commercecartopenlinkcount');
