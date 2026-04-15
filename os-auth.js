@@ -149,7 +149,8 @@ function injectNavIcons(){
   /* Cart btn opens Webflow cart */
   document.getElementById('os-bar-cart').addEventListener('click',function(e){
     e.preventDefault();e.stopPropagation();
-    var cartBtn=document.querySelector('.w-commerce-commercecartopenlink');
+    var cartBtn=document.querySelector('.w-commerce-commercecartopenlink')||document.querySelector('[data-open-product="cart"]')||document.querySelector('.cart_open-link')||document.querySelector('[class*="cart"] [class*="open"]');
+    if(!cartBtn){document.querySelectorAll('a,button').forEach(function(el){if(el.textContent.trim().match(/^CART/i)&&!el.closest('#os-bar'))cartBtn=el})}
     if(cartBtn)cartBtn.click();
   });
   /* Menu btn (grid icon) */
@@ -163,9 +164,13 @@ function injectNavIcons(){
     if(N){if(N.classList.contains('is-open')){N.classList.remove('is-open')}else{N.classList.add('is-open');var panels=N.querySelectorAll('.os-panel');panels.forEach(function(p){p.classList.remove('is-active')});var mp=document.getElementById('os-panel-main');if(mp)mp.classList.add('is-active')}}
   });
   wrap.appendChild(menuBtn);
-  /* Hide old separate cart */
-  document.querySelectorAll('.cart_,.w-commerce-commercecartcontainerwrapper').forEach(function(el){
-    if(!bar.contains(el))el.style.cssText='position:fixed!important;top:-9999px!important;left:-9999px!important;opacity:0!important;pointer-events:none!important';
+  /* Hide old separate cart visually but keep functional */
+  document.querySelectorAll('.cart_,.w-commerce-commercecartcontainerwrapper,[class*="cart_open"]').forEach(function(el){
+    if(!bar.contains(el)){el.style.cssText='position:fixed!important;top:-200px!important;left:0!important;opacity:0!important;height:1px!important;overflow:hidden!important;pointer-events:none!important'}
+  });
+  /* Keep the cart wrapper (slide-in panel) visible but not the open button */
+  document.querySelectorAll('.w-commerce-commercecartcontainerwrapper').forEach(function(el){
+    el.style.cssText='';
   });
   /* Sync cart count */
   function syncCartCount(){

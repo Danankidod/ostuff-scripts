@@ -124,6 +124,8 @@ body:has(#os-account) h2{
 .os-bar-label{font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important}
 /* Hide old separate elements */
 .os-nav-icons{display:none!important}
+.cart_{position:fixed!important;top:-200px!important;opacity:0!important;pointer-events:none!important;height:1px!important;overflow:hidden!important}
+.cart_ .w-commerce-commercecartopenlink{pointer-events:auto!important}
 @media(max-width:479px){
 .os-bar-label{display:none!important}
 .os-bar-icons{gap:10px!important}
