@@ -149,11 +149,14 @@ function injectNavIcons(){
   /* Cart btn opens Webflow cart */
   document.getElementById('os-bar-cart').addEventListener('click',function(e){
     e.preventDefault();e.stopPropagation();
-    var cartBtn=document.querySelector('.w-commerce-commercecartwrapper');
-    if(cartBtn){cartBtn.style.pointerEvents='auto';cartBtn.click();return}
-    cartBtn=document.querySelector('.w-commerce-commercecartopenlink');
-    if(cartBtn){cartBtn.style.pointerEvents='auto';cartBtn.click();return}
-    document.querySelectorAll('a').forEach(function(el){if(el.textContent.trim().match(/^CART/i)&&!el.closest('#os-bar')){el.style.pointerEvents='auto';el.click()}});
+    /* Temporarily show the hidden cart_ component, click its link, then re-hide */
+    var cartComp=document.querySelector('.cart_');
+    if(cartComp){
+      cartComp.style.cssText='position:fixed;top:0;right:0;z-index:10012;opacity:1;width:auto;height:auto;overflow:visible;pointer-events:auto';
+      var link=cartComp.querySelector('.w-commerce-commercecartwrapper')||cartComp.querySelector('a');
+      if(link){link.style.pointerEvents='auto';link.click()}
+      setTimeout(function(){cartComp.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0;z-index:-1'},100);
+    }
   });
   /* Menu btn (grid icon) */
   var menuBtn=document.createElement('button');

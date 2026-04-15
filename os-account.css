@@ -124,8 +124,8 @@ body:has(#os-account) h2{
 .os-bar-label{font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important}
 /* Hide old separate elements */
 .os-nav-icons{display:none!important}
-.cart_{position:fixed!important;top:0!important;left:0!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:0!important;z-index:-1!important}
-.cart_ .w-commerce-commercecartwrapper{pointer-events:auto!important}
+.cart_{position:fixed!important;top:0!important;left:0!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:0!important;z-index:-1!important;pointer-events:none!important}
+.cart_ .w-commerce-commercecartcontainerwrapper{position:fixed!important;top:0!important;right:0!important;bottom:0!important;width:auto!important;height:100vh!important;overflow:visible!important;opacity:1!important;pointer-events:auto!important;z-index:10012!important}
 @media(max-width:479px){
 .os-bar-label{display:none!important}
 .os-bar-icons{gap:10px!important}
