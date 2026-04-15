@@ -99,7 +99,11 @@ function getProductData(card){
   var name=card.querySelector('[class*="product_name"]');
   var price=card.querySelector('[class*="product_price"]');
   var img=card.querySelector('.Overlay img, img[class*="product-image"], img[class*="image-11"]');
-  return{slug:slug,name:name?name.textContent.trim():'',price:price?price.textContent.trim():'',image:img?img.src:''};
+  var link=card.querySelector('a[href*="/product/"]');
+  var imgSrc=img?img.src:'';
+  /* Convert avif/webp to jpg for email compatibility */
+  if(imgSrc)imgSrc=imgSrc.replace('.avif','.jpg').replace('.webp','.jpg');
+  return{slug:slug,name:name?name.textContent.trim():'',price:price?price.textContent.trim():'',image:imgSrc,url:link?link.href:''};
 }
 
 function isWished(slug){return wishedSlugs.indexOf(slug)>-1}
@@ -125,7 +129,7 @@ function toggleWish(card,btn){
           updateCounter();
         });
       }else{
-        c.from('wishlists').insert({user_id:user.id,product_slug:data.slug,product_name:data.name,product_image:data.image,product_price:data.price}).then(function(r){
+        c.from('wishlists').insert({user_id:user.id,product_slug:data.slug,product_name:data.name,product_image:data.image,product_price:data.price,product_url:data.url}).then(function(r){
           if(!r.error){wishedSlugs.push(data.slug);wishData.push({product_slug:data.slug,product_name:data.name,product_image:data.image,product_price:data.price});updateBtn(btn,true);updateCounter()}
         });
       }
