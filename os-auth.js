@@ -140,13 +140,20 @@ function injectNavIcons(){
   ab.className='os-bar-icon';ab.id='os-bar-account';ab.href='/account';ab.title='Account';
   ab.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
   wrap.appendChild(ab);
-  /* Cart — reuse the REAL Webflow CommerceCartOpenLink so native click works */
-  var wfCartLink=document.querySelector('.w-commerce-commercecartopenlink');
-  if(wfCartLink){
-    wfCartLink.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span id="os-bar-cart-count" class="os-bar-count"></span>';
-    wfCartLink.className='os-bar-icon w-commerce-commercecartopenlink';
-    wfCartLink.style.cssText='display:flex!important;align-items:center!important;gap:4px!important;position:static!important;opacity:1!important;pointer-events:auto!important;width:auto!important;height:auto!important;overflow:visible!important;text-decoration:none!important;color:#a09b93!important';
-    wrap.appendChild(wfCartLink);
+  /* Cart — create our icon, clicking it triggers the REAL Webflow cart open link */
+  var cartIcon=document.createElement('button');
+  cartIcon.className='os-bar-icon';cartIcon.title='Cart';
+  cartIcon.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span id="os-bar-cart-count" class="os-bar-count"></span>';
+  cartIcon.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var real=document.querySelector('.w-commerce-commercecartopenlink');
+    if(real)real.click();
+  });
+  wrap.appendChild(cartIcon);
+  /* Hide the original cart button text but keep it in DOM and clickable */
+  var cartBtnWrap=document.querySelector('.w-commerce-commercecartopenlink');
+  if(cartBtnWrap){
+    cartBtnWrap.style.cssText='position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0.01;pointer-events:auto;z-index:1';
   }
   /* INSERT between SEARCH and TOGGLE — don't touch originals */
   if(tog){tog.parentNode.insertBefore(wrap,tog)}else{bar.appendChild(wrap)}
