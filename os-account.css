@@ -115,11 +115,19 @@ body:has(#os-account) h2{
 #os-account-wishlist a{color:#fff!important;text-decoration:none!important}
 #os-account-wishlist button:hover{border-color:#fff!important;color:#fff!important}
 
-/* ═══ NAV ICONS ═══ */
-.os-nav-icons{display:flex;align-items:center;gap:16px;position:fixed;top:16px;right:24px;z-index:10001}
-.os-nav-icon{display:flex;align-items:center;gap:6px;text-decoration:none;color:#a09b93;font:500 9px/1 'Space Grotesk',sans-serif;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;cursor:pointer;background:none;border:0;padding:0}
-.os-nav-icon:hover{color:#fff}
-.os-nav-icon svg{width:16px;height:16px}
+/* ═══ BAR ICONS ═══ */
+.os-bar-icons{display:flex!important;align-items:center!important;gap:14px!important}
+.os-bar-icon{display:flex!important;align-items:center!important;gap:4px!important;text-decoration:none!important;color:#a09b93!important;background:none!important;border:0!important;padding:0!important;cursor:pointer!important;transition:color .2s!important;font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;text-transform:uppercase!important}
+.os-bar-icon:hover{color:#fff!important}
+.os-bar-icon svg{flex-shrink:0}
+.os-bar-count{font:500 8px/1 'Space Grotesk',sans-serif!important;color:#a09b93!important;letter-spacing:.1em!important}
+.os-bar-label{font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important}
+/* Hide old separate elements */
+.os-nav-icons{display:none!important}
+@media(max-width:479px){
+.os-bar-label{display:none!important}
+.os-bar-icons{gap:10px!important}
+}
 
 /* ═══ WISHLIST HEART ON CARDS ═══ */
 .os-wish-btn{transition:all .2s!important}

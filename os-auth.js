@@ -119,15 +119,61 @@ window.osRemoveWish=function(slug,el){
   });
 };
 
-/* ═══ NAV ICONS ═══ */
+/* ═══ NAV ICONS — inject into os-bar ═══ */
 function injectNavIcons(){
-  if(document.querySelector('.os-nav-icons'))return;
+  if(document.querySelector('.os-bar-icons'))return;
+  var bar=document.getElementById('os-bar');
+  if(!bar)return;
+  var heartSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+  var userSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+  var cartSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>';
   var wrap=document.createElement('div');
-  wrap.className='os-nav-icons';
-  var heartSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
-  var userSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-  wrap.innerHTML='<button class="os-nav-icon" title="Wishlist" onclick="if(window.osOpenWishPanel)osOpenWishPanel();else window.location=\'/log-in\'">'+heartSvg+'<span id="os-wish-count"></span></button><a href="/account" class="os-nav-icon" title="Account">'+userSvg+'</a>';
-  document.body.appendChild(wrap);
+  wrap.className='os-bar-icons';
+  wrap.style.cssText='display:flex;align-items:center;gap:14px;margin-left:auto';
+  wrap.innerHTML='<button class="os-bar-icon" id="os-bar-search-btn" style="display:flex;align-items:center;gap:5px"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="os-bar-label">SEARCH</span></button>'
+    +'<button class="os-bar-icon" title="Wishlist" onclick="if(window.osOpenWishPanel)osOpenWishPanel();else window.location=\'/log-in\'">'+heartSvg+'<span id="os-wish-count" class="os-bar-count"></span></button>'
+    +'<a href="/account" class="os-bar-icon" id="os-bar-account" title="Account">'+userSvg+'</a>'
+    +'<button class="os-bar-icon" id="os-bar-cart" title="Cart">'+cartSvg+'<span id="os-bar-cart-count" class="os-bar-count"></span></button>';
+  /* Find existing right side of bar and replace or append */
+  var searchEl=bar.querySelector('#os-bar-search');
+  var togEl=bar.querySelector('#os-bar-tog');
+  if(searchEl)searchEl.style.display='none';
+  if(togEl)togEl.style.display='none';
+  bar.appendChild(wrap);
+  /* Search btn triggers the nav search panel */
+  document.getElementById('os-bar-search-btn').addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var N=document.getElementById('os-nav');
+    if(N){N.classList.add('is-open');var panels=N.querySelectorAll('.os-panel');panels.forEach(function(p){p.classList.remove('is-active')});var sp=document.getElementById('os-panel-search');if(sp)sp.classList.add('is-active');var si=document.getElementById('os-search-input');if(si)si.focus()}
+  });
+  /* Cart btn opens Webflow cart */
+  document.getElementById('os-bar-cart').addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var cartBtn=document.querySelector('.w-commerce-commercecartopenlink');
+    if(cartBtn)cartBtn.click();
+  });
+  /* Menu btn (grid icon) */
+  var menuBtn=document.createElement('button');
+  menuBtn.className='os-bar-icon';
+  menuBtn.id='os-bar-menu';
+  menuBtn.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>';
+  menuBtn.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var N=document.getElementById('os-nav');
+    if(N){if(N.classList.contains('is-open')){N.classList.remove('is-open')}else{N.classList.add('is-open');var panels=N.querySelectorAll('.os-panel');panels.forEach(function(p){p.classList.remove('is-active')});var mp=document.getElementById('os-panel-main');if(mp)mp.classList.add('is-active')}}
+  });
+  wrap.appendChild(menuBtn);
+  /* Hide old separate cart */
+  document.querySelectorAll('.cart_,.w-commerce-commercecartcontainerwrapper').forEach(function(el){
+    if(!bar.contains(el))el.style.cssText='position:fixed!important;top:-9999px!important;left:-9999px!important;opacity:0!important;pointer-events:none!important';
+  });
+  /* Sync cart count */
+  function syncCartCount(){
+    var wfCount=document.querySelector('.w-commerce-commercecartopenlinkcount');
+    var osCount=document.getElementById('os-bar-cart-count');
+    if(wfCount&&osCount){var n=wfCount.textContent.trim();osCount.textContent=n&&n!=='0'?'('+n+')':''}
+  }
+  syncCartCount();setInterval(syncCartCount,2000);
 }
 
 /* ═══ NAV AUTH STATE ═══ */
