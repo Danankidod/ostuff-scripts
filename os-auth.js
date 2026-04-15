@@ -140,29 +140,19 @@ function injectNavIcons(){
   ab.className='os-bar-icon';ab.id='os-bar-account';ab.href='/account';ab.title='Account';
   ab.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
   wrap.appendChild(ab);
-  /* Cart */
-  var cb=document.createElement('button');
-  cb.className='os-bar-icon';cb.title='Cart';
-  cb.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span id="os-bar-cart-count" class="os-bar-count"></span>';
-  cb.addEventListener('click',function(e){
-    e.preventDefault();e.stopPropagation();
-    /* Show the hidden cart link, click it with a real event, re-hide */
-    var link=document.querySelector('.w-commerce-commercecartwrapper');
-    if(link){
-      link.style.cssText='position:fixed;top:0;right:0;z-index:99999;opacity:1;pointer-events:auto;width:auto;height:auto;overflow:visible';
-      setTimeout(function(){
-        link.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
-        setTimeout(function(){link.style.cssText='position:fixed;top:-9999px;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden'},200);
-      },50);
-    }
-  });
-  wrap.appendChild(cb);
+  /* Cart — reuse the REAL Webflow cart link so native click works */
+  var wfCart=document.querySelector('.w-commerce-commercecartwrapper');
+  if(wfCart){
+    wfCart.textContent='';
+    wfCart.className='os-bar-icon w-commerce-commercecartwrapper';
+    wfCart.title='Cart';
+    wfCart.style.cssText='display:flex!important;align-items:center!important;gap:4px!important;position:static!important;opacity:1!important;pointer-events:auto!important;width:auto!important;height:auto!important;overflow:visible!important;text-decoration:none!important;color:#a09b93!important';
+    wfCart.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span id="os-bar-cart-count" class="os-bar-count"></span>';
+    wrap.appendChild(wfCart);
+  }
   /* INSERT between SEARCH and TOGGLE — don't touch originals */
   if(tog){tog.parentNode.insertBefore(wrap,tog)}else{bar.appendChild(wrap)}
-  /* Hide the CART text link everywhere */
-  document.querySelectorAll('.w-commerce-commercecartwrapper').forEach(function(el){
-    el.style.cssText='position:fixed;top:-9999px;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden';
-  });
+  /* Cart link is now inside our bar — no need to hide */
   /* Sync cart count */
   setInterval(function(){
     var wfC=document.querySelector('.w-commerce-commercecartopenlinkcount');
