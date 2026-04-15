@@ -124,8 +124,10 @@ body:has(#os-account) h2{
 .os-bar-label{font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important}
 /* Hide old separate elements */
 .os-nav-icons{display:none!important}
-.cart_ .w-commerce-commercecartwrapper{position:fixed!important;top:-9999px!important;opacity:0!important;pointer-events:none!important;width:0!important;height:0!important;overflow:hidden!important}
-.cart_ .w-commerce-commercecartcontainerwrapper{position:fixed!important;top:0!important;right:0!important;bottom:0!important;width:auto!important;height:100vh!important;overflow:visible!important;opacity:1!important;pointer-events:auto!important;z-index:10012!important}
+/* Hide ONLY the cart open text link, keep everything else */
+.w-commerce-commercecartwrapper{position:fixed!important;top:-9999px!important;opacity:0!important;width:0!important;height:0!important;overflow:hidden!important;pointer-events:none!important}
+/* Cart container stays normal */
+.w-commerce-commercecartcontainerwrapper{z-index:10012!important}
 @media(max-width:479px){
 .os-bar-label{display:none!important}
 .os-bar-icons{gap:10px!important}
