@@ -131,6 +131,22 @@ body:has(#os-account) h2{
 .os-bar-icons{gap:10px!important}
 }
 
+/* ═══ WEBFLOW CART — dark style + backdrop ═══ */
+.w-commerce-commercecartcontainerwrapper{z-index:10012!important}
+.w-commerce-commercecartcontainerwrapper.w--open::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:-1}
+.w-commerce-commercecartcontainer{background:#0a0a0a!important;color:#fff!important;border:0!important;font-family:'Space Grotesk',sans-serif!important}
+.w-commerce-commercecartproductname{color:#fff!important;font:500 10px/1.2 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important;text-transform:uppercase!important}
+.w-commerce-commercecartoptionlist{color:#555!important;font:400 9px/1.4 'Space Grotesk',sans-serif!important}
+.w-commerce-commercecartordervalue{color:#fff!important;font:500 10px/1 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important}
+.w-commerce-commercecartapplepaybutton{border-radius:0!important}
+.w-commerce-commercecartcheckoutbutton{background:#fff!important;color:#0a0a0a!important;font:600 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.16em!important;text-transform:uppercase!important;border-radius:0!important;padding:16px!important}
+.w-commerce-commercecartcheckoutbutton:hover{background:#a09b93!important}
+.w-commerce-commercecartquantity{background:transparent!important;border:1px solid #333!important;color:#fff!important;font:400 10px/1 'Space Grotesk',sans-serif!important}
+[data-wf-cart-action="remove-item"]{color:#555!important;font:500 8px/1 'Space Grotesk',sans-serif!important;letter-spacing:.12em!important;text-transform:uppercase!important}
+.w-commerce-commercecartcloselink{color:#555!important;font:500 9px/1 'Space Grotesk',sans-serif!important;letter-spacing:.14em!important;text-transform:uppercase!important}
+.w-commerce-commercecartcloselink:hover{color:#fff!important}
+.w-commerce-commercecartemptystate{color:#555!important;font:400 10px/1.6 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important;text-transform:uppercase!important}
+
 /* ═══ WISHLIST HEART ON CARDS ═══ */
 .os-wish-btn{transition:all .2s!important}
 .os-wish-btn:hover{background:rgba(255,255,255,.95)!important;box-shadow:0 2px 8px rgba(0,0,0,.1)!important;transform:scale(1.1)!important}
