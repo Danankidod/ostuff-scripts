@@ -119,71 +119,46 @@ window.osRemoveWish=function(slug,el){
   });
 };
 
-/* ═══ NAV ICONS — inject into os-bar ═══ */
+/* ═══ NAV ICONS — add wishlist+account+cart into os-bar, keep original search+menu ═══ */
 function injectNavIcons(){
   if(document.querySelector('.os-bar-icons'))return;
   var bar=document.getElementById('os-bar');
   if(!bar)return;
-  var heartSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
-  var userSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-  var cartSvg='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>';
+  var tog=document.getElementById('os-bar-tog');
+  /* Create 3 new icons: wishlist, account, cart */
   var wrap=document.createElement('div');
   wrap.className='os-bar-icons';
-  wrap.style.cssText='display:flex;align-items:center;gap:14px;margin-left:auto';
-  wrap.innerHTML='<button class="os-bar-icon" id="os-bar-search-btn" style="display:flex;align-items:center;gap:5px"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="os-bar-label">SEARCH</span></button>'
-    +'<button class="os-bar-icon" title="Wishlist" onclick="if(window.osOpenWishPanel)osOpenWishPanel();else window.location=\'/log-in\'">'+heartSvg+'<span id="os-wish-count" class="os-bar-count"></span></button>'
-    +'<a href="/account" class="os-bar-icon" id="os-bar-account" title="Account">'+userSvg+'</a>'
-    +'<button class="os-bar-icon" id="os-bar-cart" title="Cart">'+cartSvg+'<span id="os-bar-cart-count" class="os-bar-count"></span></button>';
-  /* Find existing right side of bar and replace or append */
-  var searchEl=bar.querySelector('#os-bar-search');
-  var togEl=bar.querySelector('#os-bar-tog');
-  if(searchEl)searchEl.style.display='none';
-  if(togEl)togEl.style.display='none';
-  bar.appendChild(wrap);
-  /* Search btn triggers the nav search panel */
-  document.getElementById('os-bar-search-btn').addEventListener('click',function(e){
+  wrap.style.cssText='display:inline-flex;align-items:center;gap:14px';
+  /* Wishlist */
+  var wb=document.createElement('button');
+  wb.className='os-bar-icon';wb.title='Wishlist';
+  wb.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="os-wish-count" class="os-bar-count"></span>';
+  wb.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(window.osOpenWishPanel)osOpenWishPanel();else window.location='/log-in'});
+  wrap.appendChild(wb);
+  /* Account */
+  var ab=document.createElement('a');
+  ab.className='os-bar-icon';ab.id='os-bar-account';ab.href='/account';ab.title='Account';
+  ab.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+  wrap.appendChild(ab);
+  /* Cart */
+  var cb=document.createElement('button');
+  cb.className='os-bar-icon';cb.title='Cart';
+  cb.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span id="os-bar-cart-count" class="os-bar-count"></span>';
+  cb.addEventListener('click',function(e){
     e.preventDefault();e.stopPropagation();
-    var N=document.getElementById('os-nav');
-    if(N){N.classList.add('is-open');var panels=N.querySelectorAll('.os-panel');panels.forEach(function(p){p.classList.remove('is-active')});var sp=document.getElementById('os-panel-search');if(sp)sp.classList.add('is-active');var si=document.getElementById('os-search-input');if(si)si.focus()}
+    /* Find the REAL Webflow cart wrapper and click it */
+    var wf=document.querySelector('.w-commerce-commercecartwrapper');
+    if(wf){wf.style.position='fixed';wf.style.top='0';wf.style.right='0';wf.style.opacity='1';wf.style.pointerEvents='auto';wf.style.zIndex='10012';wf.style.width='auto';wf.style.height='auto';wf.style.overflow='visible';wf.click();setTimeout(function(){wf.style.cssText='position:fixed;top:-9999px;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden'},300)}
   });
-  /* Cart btn opens Webflow cart */
-  document.getElementById('os-bar-cart').addEventListener('click',function(e){
-    e.preventDefault();e.stopPropagation();
-    /* Temporarily show the hidden cart_ component, click its link, then re-hide */
-    var cartComp=document.querySelector('.cart_');
-    if(cartComp){
-      cartComp.style.cssText='position:fixed;top:0;right:0;z-index:10012;opacity:1;width:auto;height:auto;overflow:visible;pointer-events:auto';
-      var link=cartComp.querySelector('.w-commerce-commercecartwrapper')||cartComp.querySelector('a');
-      if(link){link.style.pointerEvents='auto';link.click()}
-      setTimeout(function(){cartComp.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0;z-index:-1'},100);
-    }
-  });
-  /* Menu btn (grid icon) */
-  var menuBtn=document.createElement('button');
-  menuBtn.className='os-bar-icon';
-  menuBtn.id='os-bar-menu';
-  menuBtn.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>';
-  menuBtn.addEventListener('click',function(e){
-    e.preventDefault();e.stopPropagation();
-    var N=document.getElementById('os-nav');
-    if(N){if(N.classList.contains('is-open')){N.classList.remove('is-open')}else{N.classList.add('is-open');var panels=N.querySelectorAll('.os-panel');panels.forEach(function(p){p.classList.remove('is-active')});var mp=document.getElementById('os-panel-main');if(mp)mp.classList.add('is-active')}}
-  });
-  wrap.appendChild(menuBtn);
-  /* Hide old cart button visually but keep it in DOM and clickable for JS */
-  document.querySelectorAll('.cart_').forEach(function(el){
-    if(!bar.contains(el)){el.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0;z-index:-1'}
-  });
-  /* Ensure cart wrapper link stays functional */
-  document.querySelectorAll('.w-commerce-commercecartwrapper').forEach(function(el){
-    el.style.pointerEvents='auto';
-  });
+  wrap.appendChild(cb);
+  /* INSERT between SEARCH and TOGGLE — don't touch originals */
+  if(tog){tog.parentNode.insertBefore(wrap,tog)}else{bar.appendChild(wrap)}
   /* Sync cart count */
-  function syncCartCount(){
-    var wfCount=document.querySelector('.w-commerce-commercecartopenlinkcount');
-    var osCount=document.getElementById('os-bar-cart-count');
-    if(wfCount&&osCount){var n=wfCount.textContent.trim();osCount.textContent=n&&n!=='0'?'('+n+')':''}
-  }
-  syncCartCount();setInterval(syncCartCount,2000);
+  setInterval(function(){
+    var wfC=document.querySelector('.w-commerce-commercecartopenlinkcount');
+    var osC=document.getElementById('os-bar-cart-count');
+    if(wfC&&osC){var n=wfC.textContent.trim();osC.textContent=n&&n!=='0'?'('+n+')':''}
+  },3000);
 }
 
 /* ═══ NAV AUTH STATE ═══ */
