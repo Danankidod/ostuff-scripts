@@ -3,23 +3,19 @@
 if(location.pathname.indexOf('/product/')!==0)return;
 
 var SECTIONS=[
-  {title:'SIZE & FIT',body:'Consult our detailed size chart for the perfect fit.<br><br><a href="/size-guide" style="display:inline-block;font:500 8px/1 \'Space Grotesk\',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;border:1px solid #ccc;padding:8px 16px;transition:all .2s">VIEW SIZE GUIDE \u2192</a>'},
+  {title:'SIZE & FIT',body:'Consult our detailed size chart for the perfect fit.<br><br><a href="/size-guide" style="display:inline-block;font:500 8px/1 \'Space Grotesk\',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;border:1px solid #ccc;padding:8px 16px">VIEW SIZE GUIDE \u2192</a>'},
   {title:'MATERIALS & CARE',body:'Machine wash at 30\u00b0C \u2014 cold cycle.<br>Do not tumble dry.<br>Iron on low heat, inside out.<br>Do not dry clean.'},
-  {title:'SHIPPING & MADE TO ORDER',body:'Each piece is handcrafted to order in Paris.<br>Production time: 3 to 4 weeks.<br>Free shipping over \u20ac200. Worldwide tracked delivery.<br>14-day return policy on unworn items.<br><br><a href="/assistance" style="display:inline-block;font:500 8px/1 \'Space Grotesk\',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;border:1px solid #ccc;padding:8px 16px;transition:all .2s">SHIPPING POLICY \u2192</a>'},
+  {title:'SHIPPING & MADE TO ORDER',body:'Each piece is handcrafted to order in Paris.<br>Production time: 3 to 4 weeks.<br>Free shipping over \u20ac200. Worldwide tracked delivery.<br>14-day return policy on unworn items.<br><br><a href="/assistance" style="display:inline-block;font:500 8px/1 \'Space Grotesk\',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;border:1px solid #ccc;padding:8px 16px">SHIPPING POLICY \u2192</a>'},
   {title:'AUTHENTICITY \u2014 GIMIQ\u00ae',body:'Every OSTUFF piece includes a digital authenticity passport powered by GIMIQ\u00ae blockchain.<br>NFC chip embedded \u2014 scan to verify instantly.<br>Ownership history & resale certificate included.'}
 ];
 
 function inject(){
   if(document.getElementById('os-pd-wrap'))return;
 
-  /* Fix right panel scrollability */
-  var rightPanel=document.querySelector('.product-page_right');
-  if(rightPanel)rightPanel.style.cssText+=';overflow-y:auto!important';
-
-  /* Build accordion with ALL inline styles */
-  var wrap=document.createElement('div');
-  wrap.id='os-pd-wrap';
-  wrap.style.cssText='width:100%;background:#efece9;padding:4px 40px 0;box-sizing:border-box';
+  /* Build the full-width accordion section */
+  var section=document.createElement('div');
+  section.id='os-pd-wrap';
+  section.style.cssText='width:100%;max-width:700px;margin:0 auto;padding:40px 24px;font-family:"Space Grotesk",sans-serif;background:#efece9;border-top:1px solid #e0ddd8';
 
   SECTIONS.forEach(function(sec){
     var row=document.createElement('div');
@@ -64,24 +60,33 @@ function inject(){
 
     row.appendChild(head);
     row.appendChild(panel);
-    wrap.appendChild(row);
+    section.appendChild(row);
   });
 
-  /* Insert before div-block-15 (back to shop) */
-  var target=document.querySelector('.div-block-15');
-  if(target&&target.parentNode){
-    target.parentNode.insertBefore(wrap,target);
-  }else{
-    /* Fallback */
-    var rp=document.querySelector('.product-page_right');
-    if(rp)rp.appendChild(wrap);
+  /* INSERT OUTSIDE the sticky panel — after the product section, before related products */
+  var productSection=document.querySelector('section.section_product-page');
+  if(!productSection){
+    /* Try finding by the wrapper class */
+    var wrapper=document.querySelector('.section_product-page_wrapper');
+    if(wrapper)productSection=wrapper.closest('section');
+  }
+  if(!productSection){
+    /* Last resort: find the section containing the product images */
+    var img=document.querySelector('.product-page_left');
+    if(img)productSection=img.closest('section');
   }
 
-  /* Fix back to shop */
-  var db15=document.querySelector('.div-block-15');
-  if(db15)db15.style.cssText+=';padding:16px 40px;width:100%;box-sizing:border-box';
-
-  console.log('[OSTUFF] Product details accordion injected');
+  if(productSection&&productSection.parentNode){
+    productSection.parentNode.insertBefore(section,productSection.nextSibling);
+    console.log('[OSTUFF] Product accordions inserted AFTER product section');
+  }else{
+    /* Absolute fallback */
+    var related=document.querySelector('.section_products');
+    if(related&&related.parentNode){
+      related.parentNode.insertBefore(section,related);
+      console.log('[OSTUFF] Product accordions inserted BEFORE related products');
+    }
+  }
 }
 
 function init(){setTimeout(inject,600)}
