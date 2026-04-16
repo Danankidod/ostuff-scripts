@@ -143,7 +143,6 @@ h1,h1[class*="heading"],[class*="heading-style-h2"]{font-size:16px!important;let
 /* Form inputs — touch friendly (not search) */
 .w-commerce-commercecartitem input,form:not(.os-nav-in) textarea,form:not(.os-nav-in) select{min-height:44px!important}
 /* ═══ PRODUCT PAGE MOBILE ═══ */
-.product-page_right{padding:0!important}
 #os-pd-wrap{position:static!important;width:100%!important;left:0!important}
 }
 
