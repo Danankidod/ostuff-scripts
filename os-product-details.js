@@ -1,183 +1,102 @@
 /* ═══ OSTUFF PRODUCT DETAILS — Accordion dropdowns ═══ */
 (function(){
-if(!location.pathname.startsWith('/product/'))return;
+if(location.pathname.indexOf('/product/')!==0)return;
 
-var chevron='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .3s;flex-shrink:0"><polyline points="6 9 12 15 18 9"/></svg>';
-
-var sections=[
-  {
-    title:'SIZE & FIT',
-    id:'os-dd-size',
-    content:function(){
-      var model=document.querySelector('[class*="mannequin"],.info-block_title.padding');
-      var modelText=model?model.textContent.trim():'';
-      var h='<div class="os-dd-body">';
-      if(modelText)h+='<p class="os-dd-text">'+modelText+'</p>';
-      h+='<a href="/size-guide" class="os-dd-link">VIEW SIZE GUIDE →</a>';
-      h+='</div>';
-      return h;
-    }
-  },
-  {
-    title:'MATERIALS & CARE',
-    id:'os-dd-materials',
-    content:function(){
-      return '<div class="os-dd-body">'+
-        '<p class="os-dd-text">Detailed composition on the product label.</p>'+
-        '<ul class="os-dd-list">'+
-        '<li>Machine wash at 30°C — cold cycle</li>'+
-        '<li>Do not tumble dry</li>'+
-        '<li>Iron on low heat — inside out</li>'+
-        '<li>Do not dry clean</li>'+
-        '</ul>'+
-        '</div>';
-    }
-  },
-  {
-    title:'SHIPPING & MADE TO ORDER',
-    id:'os-dd-shipping',
-    content:function(){
-      return '<div class="os-dd-body">'+
-        '<ul class="os-dd-list">'+
-        '<li><strong>Made to order</strong> — production time: 3 to 4 weeks</li>'+
-        '<li>Free shipping on orders over €200</li>'+
-        '<li>Worldwide delivery via tracked courier</li>'+
-        '<li>14-day return policy on unworn items</li>'+
-        '</ul>'+
-        '<a href="/assistance" class="os-dd-link">SHIPPING & RETURNS POLICY →</a>'+
-        '</div>';
-    }
-  },
-  {
-    title:'AUTHENTICITY — GIMIQ®',
-    id:'os-dd-authenticity',
-    content:function(){
-      return '<div class="os-dd-body">'+
-        '<p class="os-dd-text">Every OSTUFF piece includes a digital authenticity passport powered by GIMIQ® blockchain technology.</p>'+
-        '<ul class="os-dd-list">'+
-        '<li>NFC chip embedded in the garment</li>'+
-        '<li>Scan to verify authenticity instantly</li>'+
-        '<li>Ownership history & resale certificate</li>'+
-        '<li>Proof of handcrafted origin — Paris, France</li>'+
-        '</ul>'+
-        '<p class="os-dd-badge">'+
-        '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#a09b93" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>'+
-        ' VERIFIED BY GIMIQ®</p>'+
-        '</div>';
-    }
-  }
+var SECTIONS=[
+  {title:'SIZE & FIT',body:'<p>Consult our detailed size chart for the perfect fit.</p><a href="/size-guide" class="os-pd-link">VIEW SIZE GUIDE →</a>'},
+  {title:'MATERIALS & CARE',body:'<p>Machine wash at 30°C — cold cycle. Do not tumble dry. Iron on low heat, inside out. Do not dry clean.</p>'},
+  {title:'SHIPPING & MADE TO ORDER',body:'<p>Each piece is handcrafted to order in Paris.<br>Production time: 3 to 4 weeks.<br>Free shipping over €200. Worldwide tracked delivery.<br>14-day return policy on unworn items.</p><a href="/assistance" class="os-pd-link">SHIPPING POLICY →</a>'},
+  {title:'AUTHENTICITY — GIMIQ®',body:'<p>Every OSTUFF piece includes a digital authenticity passport powered by GIMIQ® blockchain technology.<br>NFC chip embedded — scan to verify instantly.<br>Ownership history & resale certificate included.</p>'}
 ];
 
-function injectAccordions(){
-  if(document.getElementById('os-product-accordions'))return;
-
-  var wrap=document.createElement('div');
-  wrap.id='os-product-accordions';
-
-  var h='';
-  sections.forEach(function(sec){
-    h+='<div class="os-dd-section" id="'+sec.id+'">';
-    h+='<button class="os-dd-toggle" aria-expanded="false">';
-    h+='<span class="os-dd-title">'+sec.title+'</span>';
-    h+=chevron;
-    h+='</button>';
-    h+='<div class="os-dd-content" style="max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)">';
-    h+=sec.content();
+function buildHTML(){
+  var h='<div id="os-pd-wrap">';
+  SECTIONS.forEach(function(s,i){
+    h+='<div class="os-pd-row">';
+    h+='<div class="os-pd-head" data-idx="'+i+'">';
+    h+='<span>'+s.title+'</span><span class="os-pd-plus">+</span>';
     h+='</div>';
+    h+='<div class="os-pd-panel">'+s.body+'</div>';
     h+='</div>';
   });
-  wrap.innerHTML=h;
+  h+='</div>';
+  return h;
+}
 
-  /* Robust insertion: find the right panel by traversing the DOM */
-  var inserted=false;
-  /* Try 1: find back-to-shop link and insert before its parent */
-  var backLink=document.querySelector('a[href="/shop"]');
+function addCSS(){
+  if(document.getElementById('os-pd-css'))return;
+  var s=document.createElement('style');s.id='os-pd-css';
+  s.textContent=[
+    '#os-pd-wrap{width:100%;background:#efece9;padding:4px 40px 0}',
+    '.os-pd-row{border-bottom:1px solid #ddd8d0}',
+    '.os-pd-head{display:flex;justify-content:space-between;align-items:center;padding:18px 0;cursor:pointer}',
+    '.os-pd-head span:first-child{font:500 9px/1 "Space Grotesk",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#999;transition:color .2s}',
+    '.os-pd-head:hover span:first-child{color:#1a1a1a}',
+    '.os-pd-plus{font:400 16px/1 "Space Grotesk",sans-serif;color:#999;transition:color .2s}',
+    '.os-pd-head:hover .os-pd-plus{color:#1a1a1a}',
+    '.os-pd-panel{display:none;padding:0 0 18px}',
+    '.os-pd-panel p{font:400 11px/1.7 "Space Grotesk",sans-serif;color:#777;letter-spacing:.03em;margin:0 0 10px}',
+    '.os-pd-link{display:inline-block;font:500 8px/1 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;border:1px solid #ccc;padding:8px 16px;margin-top:4px;transition:all .2s}',
+    '.os-pd-link:hover{border-color:#1a1a1a;background:#1a1a1a;color:#efece9}',
+  ].join('');
+  document.head.appendChild(s);
+}
+
+function inject(){
+  if(document.getElementById('os-pd-wrap'))return;
+  addCSS();
+
+  /* Strategy: find the "back to shop" link anywhere on the page */
+  var allLinks=document.querySelectorAll('a');
+  var backLink=null;
+  for(var i=0;i<allLinks.length;i++){
+    var txt=allLinks[i].textContent.toLowerCase().trim();
+    if(txt==='back to shop'||txt.indexOf('back to shop')>-1){
+      backLink=allLinks[i];break;
+    }
+  }
+
+  var container=document.createElement('div');
+  container.innerHTML=buildHTML();
+  var wrap=container.firstChild;
+
   if(backLink){
-    var backWrap=backLink.closest('div');
-    if(backWrap&&backWrap.parentNode){
-      backWrap.parentNode.insertBefore(wrap,backWrap);
-      inserted=true;
+    /* Insert before the back-to-shop link's parent div */
+    var parentDiv=backLink.parentNode;
+    if(parentDiv&&parentDiv.parentNode){
+      parentDiv.parentNode.insertBefore(wrap,parentDiv);
     }
-  }
-  /* Try 2: find Add to Cart button and insert after its wrapper */
-  if(!inserted){
-    var atc=document.querySelector('.w-commerce-commerceaddtocartwrapper');
-    if(atc&&atc.parentNode){
-      atc.parentNode.insertBefore(wrap,atc.nextSibling);
-      inserted=true;
-    }
-  }
-  /* Try 3: find by the product price element and go up to the info container */
-  if(!inserted){
-    var price=document.querySelector('[class*="product_price"],[class*="product-price"]');
-    if(price){
-      var container=price.closest('div[class*="info"]')||price.parentNode.parentNode;
-      if(container&&container.parentNode){
-        container.parentNode.insertBefore(wrap,container.nextSibling);
-        inserted=true;
+  }else{
+    /* Fallback: find Add to Cart button */
+    var atcBtn=document.querySelector('input[value*="Add to Cart"],button[class*="add-to-cart"],.w-commerce-commerceaddtocartbutton');
+    if(atcBtn){
+      var atcWrap=atcBtn.closest('form')||atcBtn.parentNode;
+      if(atcWrap&&atcWrap.parentNode&&atcWrap.parentNode.parentNode){
+        atcWrap.parentNode.parentNode.appendChild(wrap);
       }
     }
   }
-  /* Try 4: last resort — append to the right panel area */
-  if(!inserted){
-    var rightPanel=document.querySelector('[class*="product-page_right"],[class*="product_right"]');
-    if(!rightPanel){
-      /* Find the section that contains Add to Cart */
-      var anyAtc=document.querySelector('[class*="add-to-cart"],[class*="addtocart"],.w-commerce-commerceaddtocartbutton');
-      if(anyAtc)rightPanel=anyAtc.closest('section')||anyAtc.closest('[class*="section"]')||anyAtc.parentNode.parentNode.parentNode;
-    }
-    if(rightPanel)rightPanel.appendChild(wrap);
-  }
 
-  /* Toggle logic */
-  wrap.querySelectorAll('.os-dd-toggle').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var content=this.nextElementSibling;
-      var expanded=this.getAttribute('aria-expanded')==='true';
-      var svg=this.querySelector('svg');
-      if(expanded){
-        content.style.maxHeight='0';
-        this.setAttribute('aria-expanded','false');
-        if(svg)svg.style.transform='rotate(0deg)';
+  /* Toggle click */
+  document.querySelectorAll('.os-pd-head').forEach(function(h){
+    h.addEventListener('click',function(){
+      var panel=this.nextElementSibling;
+      var plus=this.querySelector('.os-pd-plus');
+      if(panel.style.display==='block'){
+        panel.style.display='none';
+        if(plus)plus.textContent='+';
       }else{
-        content.style.maxHeight=content.scrollHeight+'px';
-        this.setAttribute('aria-expanded','true');
-        if(svg)svg.style.transform='rotate(180deg)';
+        panel.style.display='block';
+        if(plus)plus.textContent='\u2212';
       }
     });
   });
 }
 
-/* CSS injection */
-function injectStyles(){
-  if(document.getElementById('os-dd-styles'))return;
-  var style=document.createElement('style');
-  style.id='os-dd-styles';
-  style.textContent=
-    '#os-product-accordions{padding:24px 40px 0;background:#efece9}'+
-    '.os-dd-section{border-bottom:1px solid #ddd8d0}'+
-    '.os-dd-toggle{display:flex;justify-content:space-between;align-items:center;width:100%;padding:18px 0;background:none;border:0;cursor:pointer!important;transition:color .2s}'+
-    '.os-dd-toggle:hover .os-dd-title{color:#1a1a1a}'+
-    '.os-dd-title{font:500 9px/1 "Space Grotesk",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#999;transition:color .2s}'+
-    '.os-dd-body{padding:0 0 20px}'+
-    '.os-dd-text{font:400 11px/1.7 "Space Grotesk",sans-serif;color:#777;letter-spacing:.03em;margin:0 0 12px}'+
-    '.os-dd-list{font:400 11px/2 "Space Grotesk",sans-serif;color:#777;letter-spacing:.03em;padding-left:16px;margin:0 0 12px}'+
-    '.os-dd-list li{margin:0}'+
-    '.os-dd-list strong{color:#1a1a1a}'+
-    '.os-dd-link{display:inline-block;font:500 8px/1 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;border:1px solid #ccc;padding:8px 16px;transition:all .2s;margin-top:4px}'+
-    '.os-dd-link:hover{border-color:#1a1a1a;background:#1a1a1a;color:#efece9}'+
-    '.os-dd-badge{display:flex;align-items:center;gap:6px;font:500 8px/1 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#999;margin-top:12px}'+
-    '.os-dd-badge svg{stroke:#999}'+
-    '.os-dd-toggle svg{color:#999;transition:transform .3s,color .2s}'+
-    '.os-dd-toggle:hover svg{color:#1a1a1a}';
-  document.head.appendChild(style);
-}
-
+/* Run after page is fully loaded + small delay for Webflow rendering */
 function init(){
-  injectStyles();
-  setTimeout(injectAccordions,600);
+  setTimeout(inject,800);
 }
-
 if(document.readyState==='complete')init();
 else window.addEventListener('load',init);
 })();
