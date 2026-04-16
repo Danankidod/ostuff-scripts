@@ -69,12 +69,14 @@ function inject(){
     wrap.appendChild(row);
   });
 
-  /* Insert inside right panel, after the info block, before back-to-shop */
-  var target=document.querySelector('.div-block-15');
-  if(target&&target.parentNode){
-    target.parentNode.insertBefore(wrap,target);
-  }else if(rightPanel){
-    rightPanel.appendChild(wrap);
+  /* Insert right after the dark info block */
+  var infoBlock=document.querySelector('.product-page_info-block');
+  if(infoBlock&&infoBlock.parentNode){
+    infoBlock.parentNode.insertBefore(wrap,infoBlock.nextSibling);
+  }else{
+    var target=document.querySelector('.div-block-15');
+    if(target&&target.parentNode)target.parentNode.insertBefore(wrap,target);
+    else if(rightPanel)rightPanel.appendChild(wrap);
   }
 
   /* Fix back to shop */
