@@ -80,7 +80,8 @@ function inject(){
     /* Match info block: width 80%, same horizontal position */
     var ibWidth=window.getComputedStyle(infoBlock).width;
     var ibLeft=window.getComputedStyle(infoBlock).left;
-    wrap.style.cssText='width:'+ibWidth+';padding:16px 0 16px;background:#efece9;flex-shrink:0;position:absolute;left:50%;transform:translateX(-50%);box-sizing:border-box';
+    var ibStyle=window.getComputedStyle(infoBlock);
+    wrap.style.cssText='width:'+ibWidth+';padding:16px 0 16px;background:#efece9;flex-shrink:0;position:absolute;left:'+ibStyle.left+';box-sizing:border-box';
     /* Position it right below the info block */
     var ibRect=infoBlock.getBoundingClientRect();
     var parentRect=infoBlock.offsetParent?infoBlock.offsetParent.getBoundingClientRect():{top:0};
