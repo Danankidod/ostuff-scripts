@@ -70,11 +70,6 @@ var sections=[
 
 function injectAccordions(){
   if(document.getElementById('os-product-accordions'))return;
-  /* Find the Add to Cart wrapper or the info block */
-  var addToCart=document.querySelector('.Add-to-Cart-3,.w-commerce-commerceaddtocartwrapper,[class*="Add to Cart"]');
-  var backBtn=document.querySelector('.Div.Block.15,[class*="backtoshop"]');
-  var target=backBtn||addToCart;
-  if(!target)return;
 
   var wrap=document.createElement('div');
   wrap.id='os-product-accordions';
@@ -93,14 +88,45 @@ function injectAccordions(){
   });
   wrap.innerHTML=h;
 
-  /* Insert after the info block (below the dark panel) */
-  var infoBlock=document.querySelector('.product-page_info-block_,[class*="product-page_info-block"]');
-  if(infoBlock&&infoBlock.parentNode){
-    infoBlock.parentNode.insertBefore(wrap,infoBlock.nextSibling);
-  }else if(backBtn&&backBtn.parentNode){
-    backBtn.parentNode.insertBefore(wrap,backBtn);
-  }else if(addToCart&&addToCart.parentNode){
-    addToCart.parentNode.insertBefore(wrap,addToCart.nextSibling);
+  /* Robust insertion: find the right panel by traversing the DOM */
+  var inserted=false;
+  /* Try 1: find back-to-shop link and insert before its parent */
+  var backLink=document.querySelector('a[href="/shop"]');
+  if(backLink){
+    var backWrap=backLink.closest('div');
+    if(backWrap&&backWrap.parentNode){
+      backWrap.parentNode.insertBefore(wrap,backWrap);
+      inserted=true;
+    }
+  }
+  /* Try 2: find Add to Cart button and insert after its wrapper */
+  if(!inserted){
+    var atc=document.querySelector('.w-commerce-commerceaddtocartwrapper');
+    if(atc&&atc.parentNode){
+      atc.parentNode.insertBefore(wrap,atc.nextSibling);
+      inserted=true;
+    }
+  }
+  /* Try 3: find by the product price element and go up to the info container */
+  if(!inserted){
+    var price=document.querySelector('[class*="product_price"],[class*="product-price"]');
+    if(price){
+      var container=price.closest('div[class*="info"]')||price.parentNode.parentNode;
+      if(container&&container.parentNode){
+        container.parentNode.insertBefore(wrap,container.nextSibling);
+        inserted=true;
+      }
+    }
+  }
+  /* Try 4: last resort — append to the right panel area */
+  if(!inserted){
+    var rightPanel=document.querySelector('[class*="product-page_right"],[class*="product_right"]');
+    if(!rightPanel){
+      /* Find the section that contains Add to Cart */
+      var anyAtc=document.querySelector('[class*="add-to-cart"],[class*="addtocart"],.w-commerce-commerceaddtocartbutton');
+      if(anyAtc)rightPanel=anyAtc.closest('section')||anyAtc.closest('[class*="section"]')||anyAtc.parentNode.parentNode.parentNode;
+    }
+    if(rightPanel)rightPanel.appendChild(wrap);
   }
 
   /* Toggle logic */
