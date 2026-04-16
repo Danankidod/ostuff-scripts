@@ -30,7 +30,7 @@ function inject(){
 
   SECTIONS.forEach(function(sec){
     var row=document.createElement('div');
-    row.style.cssText='border-bottom:1px solid #333;padding:0 40px';
+    row.style.cssText='border-bottom:1px solid #ddd8d0;padding:0 30px';
 
     var head=document.createElement('div');
     head.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:18px 0;cursor:pointer';
@@ -77,8 +77,15 @@ function inject(){
   /* Insert INSIDE the dark info block, at the very end */
   var infoBlock=document.querySelector('.product-page_info-block');
   if(infoBlock){
-    wrap.style.cssText='width:100%;padding:0;background:#2a2a2a;flex-shrink:0;position:relative';
-    infoBlock.appendChild(wrap);
+    /* Match info block: width 80%, same horizontal position */
+    var ibWidth=window.getComputedStyle(infoBlock).width;
+    var ibLeft=window.getComputedStyle(infoBlock).left;
+    wrap.style.cssText='width:'+ibWidth+';padding:12px 0 0;background:#efece9;flex-shrink:0;position:absolute;bottom:auto;left:'+(ibLeft||'0')+';box-sizing:border-box';
+    /* Position it right below the info block */
+    var ibRect=infoBlock.getBoundingClientRect();
+    var parentRect=infoBlock.offsetParent?infoBlock.offsetParent.getBoundingClientRect():{top:0};
+    wrap.style.top=(infoBlock.offsetTop+infoBlock.offsetHeight)+'px';
+    infoBlock.parentNode.appendChild(wrap);
   }else{
     var target=document.querySelector('.div-block-15');
     if(target&&target.parentNode)target.parentNode.insertBefore(wrap,target);
