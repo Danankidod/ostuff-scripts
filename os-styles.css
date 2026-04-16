@@ -142,6 +142,14 @@ h1,h1[class*="heading"],[class*="heading-style-h2"]{font-size:16px!important;let
 .os-lb-grid .w-dyn-item:hover img{transform:none!important}
 /* Form inputs — touch friendly (not search) */
 .w-commerce-commercecartitem input,form:not(.os-nav-in) textarea,form:not(.os-nav-in) select{min-height:44px!important}
+/* ═══ PRODUCT PAGE MOBILE ═══ */
+.section_product-page_wrapper{flex-direction:column!important;height:auto!important}
+.product-page_left{position:relative!important;top:0!important;width:100%!important;height:auto!important;flex-shrink:0!important}
+.product-page_left img{width:100%!important;height:auto!important}
+.product-page_right{position:static!important;width:100%!important;height:auto!important;padding:0 16px 20px!important;overflow:visible!important}
+.product-page_info-block{position:relative!important;width:100%!important;left:0!important;padding:24px 20px!important}
+.div-block-15{padding:16px 20px!important;width:100%!important;box-sizing:border-box!important}
+#os-pd-wrap{position:static!important;width:100%!important;left:0!important}
 }
 
 @media(max-width:479px){
