@@ -17,20 +17,13 @@ function inject(){
 
   var isMobile=window.innerWidth<768;
 
-  /* Desktop only: center info block */
-  if(!isMobile){
-    infoBlock.style.cssText+=';left:10%';
-  }
-
-  /* Build accordion */
+  /* Build accordion — NO modifications to existing elements */
   var wrap=document.createElement('div');
   wrap.id='os-pd-wrap';
 
   if(isMobile){
-    /* Mobile: simple block in flow */
     wrap.style.cssText='width:100%;padding:8px 0;background:#efece9;box-sizing:border-box';
   }else{
-    /* Desktop: absolute positioned below info block */
     var ibWidth=window.getComputedStyle(infoBlock).width;
     wrap.style.cssText='width:'+ibWidth+';padding:16px 0;background:#efece9;position:absolute;left:10%;top:'+(infoBlock.offsetTop+infoBlock.offsetHeight)+'px;box-sizing:border-box';
   }
@@ -75,7 +68,7 @@ function inject(){
     wrap.appendChild(row);
   });
 
-  /* Insert */
+  /* Insert — don't touch any existing styles */
   if(isMobile){
     if(infoBlock.nextSibling)infoBlock.parentNode.insertBefore(wrap,infoBlock.nextSibling);
     else infoBlock.parentNode.appendChild(wrap);
