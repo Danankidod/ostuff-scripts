@@ -25,7 +25,8 @@ function addCSS(){
     '.os-pd-panel p{font:400 11px/1.7 "Space Grotesk",sans-serif;color:#777;letter-spacing:.03em;margin:0 0 10px}'+
     '.os-pd-link{display:inline-block;font:500 8px/1 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a1a1a;text-decoration:none;border:1px solid #ccc;padding:8px 16px;margin-top:4px;transition:all .2s}'+
     '.os-pd-link:hover{border-color:#1a1a1a;background:#1a1a1a;color:#efece9}'+
-    /* Fix back to shop button overflow */
+    /* Fix right panel: make scrollable so accordions + back to shop are visible */
+    '.product-page_right{overflow-y:auto!important}'+
     '.div-block-15{padding:16px 40px!important;width:100%!important;box-sizing:border-box!important}'+
     '.backtoshop-button{display:block!important}'+
     '.backtoshop-text{text-align:center!important}';
