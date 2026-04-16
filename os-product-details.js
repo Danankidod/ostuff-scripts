@@ -12,15 +12,14 @@ var SECTIONS=[
 function inject(){
   if(document.getElementById('os-pd-wrap'))return;
 
-  var rightPanel=document.querySelector('.product-page_right');
   var infoBlock=document.querySelector('.product-page_info-block');
   if(!infoBlock)return;
 
   var isMobile=window.innerWidth<768;
 
-  /* Center info block on desktop only */
+  /* Desktop only: center info block */
   if(!isMobile){
-    infoBlock.style.cssText+=';left:10%;flex-shrink:0';
+    infoBlock.style.cssText+=';left:10%';
   }
 
   /* Build accordion */
@@ -28,8 +27,10 @@ function inject(){
   wrap.id='os-pd-wrap';
 
   if(isMobile){
-    wrap.style.cssText='width:100%;padding:16px 0;background:#efece9;box-sizing:border-box';
+    /* Mobile: simple block in flow */
+    wrap.style.cssText='width:100%;padding:8px 0;background:#efece9;box-sizing:border-box';
   }else{
+    /* Desktop: absolute positioned below info block */
     var ibWidth=window.getComputedStyle(infoBlock).width;
     wrap.style.cssText='width:'+ibWidth+';padding:16px 0;background:#efece9;position:absolute;left:10%;top:'+(infoBlock.offsetTop+infoBlock.offsetHeight)+'px;box-sizing:border-box';
   }
@@ -74,8 +75,8 @@ function inject(){
     wrap.appendChild(row);
   });
 
+  /* Insert */
   if(isMobile){
-    /* Mobile: insert right after info block in normal flow */
     if(infoBlock.nextSibling)infoBlock.parentNode.insertBefore(wrap,infoBlock.nextSibling);
     else infoBlock.parentNode.appendChild(wrap);
   }else{

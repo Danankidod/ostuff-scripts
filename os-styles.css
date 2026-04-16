@@ -142,15 +142,7 @@ h1,h1[class*="heading"],[class*="heading-style-h2"]{font-size:16px!important;let
 .os-lb-grid .w-dyn-item:hover img{transform:none!important}
 /* Form inputs — touch friendly (not search) */
 .w-commerce-commercecartitem input,form:not(.os-nav-in) textarea,form:not(.os-nav-in) select{min-height:44px!important}
-/* ═══ PRODUCT PAGE MOBILE ═══ */
-.section_product-page_wrapper{flex-direction:column!important;height:auto!important}
-.product-page_left{position:relative!important;top:0!important;width:100%!important;height:auto!important;flex-shrink:0!important;overflow:hidden!important}
-.product-page_left img{width:100%!important;height:auto!important}
-.product-page_right{position:static!important;width:100%!important;height:auto!important;padding:0!important;overflow:visible!important;border:0!important}
-.product-page_info-block{position:relative!important;width:100%!important;left:0!important;padding:20px 20px!important;margin:0!important}
-.info-block_flex-top{padding:0!important;margin:0!important;gap:4px!important}
-.info-block_flex-middle{padding:0!important;margin:0!important}
-.div-block-15{padding:12px 20px!important;width:100%!important;box-sizing:border-box!important}
+/* ═══ PRODUCT PAGE MOBILE — accordions only ═══ */
 #os-pd-wrap{position:static!important;width:100%!important;left:0!important}
 }
 
