@@ -16,14 +16,23 @@ function inject(){
   var infoBlock=document.querySelector('.product-page_info-block');
   if(!infoBlock)return;
 
-  /* Center info block */
-  infoBlock.style.cssText+=';left:10%;flex-shrink:0';
+  var isMobile=window.innerWidth<768;
+
+  /* Center info block on desktop only */
+  if(!isMobile){
+    infoBlock.style.cssText+=';left:10%;flex-shrink:0';
+  }
 
   /* Build accordion */
   var wrap=document.createElement('div');
   wrap.id='os-pd-wrap';
-  var ibWidth=window.getComputedStyle(infoBlock).width;
-  wrap.style.cssText='width:'+ibWidth+';padding:16px 0;background:#efece9;position:absolute;left:10%;top:'+(infoBlock.offsetTop+infoBlock.offsetHeight)+'px;box-sizing:border-box';
+
+  if(isMobile){
+    wrap.style.cssText='width:100%;padding:16px 0;background:#efece9;box-sizing:border-box';
+  }else{
+    var ibWidth=window.getComputedStyle(infoBlock).width;
+    wrap.style.cssText='width:'+ibWidth+';padding:16px 0;background:#efece9;position:absolute;left:10%;top:'+(infoBlock.offsetTop+infoBlock.offsetHeight)+'px;box-sizing:border-box';
+  }
 
   SECTIONS.forEach(function(sec){
     var row=document.createElement('div');
@@ -65,7 +74,13 @@ function inject(){
     wrap.appendChild(row);
   });
 
-  infoBlock.parentNode.appendChild(wrap);
+  if(isMobile){
+    /* Mobile: insert right after info block in normal flow */
+    if(infoBlock.nextSibling)infoBlock.parentNode.insertBefore(wrap,infoBlock.nextSibling);
+    else infoBlock.parentNode.appendChild(wrap);
+  }else{
+    infoBlock.parentNode.appendChild(wrap);
+  }
 }
 
 function init(){setTimeout(inject,600)}
