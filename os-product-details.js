@@ -17,10 +17,10 @@ function inject(){
   if(rightPanel){
     rightPanel.style.cssText+=';display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;overflow-y:auto!important;padding-top:40px!important';
   }
-  /* Fix info block: no overlap */
+  /* Center info block to match accordions */
   var infoBlock=document.querySelector('.product-page_info-block');
   if(infoBlock){
-    infoBlock.style.cssText+=';position:relative;z-index:1;flex-shrink:0;overflow:visible';
+    infoBlock.style.cssText+=';left:50%;transform:translateX(-50%);flex-shrink:0';
   }
 
   /* Build accordion */
@@ -80,8 +80,7 @@ function inject(){
     /* Match info block: width 80%, same horizontal position */
     var ibWidth=window.getComputedStyle(infoBlock).width;
     var ibLeft=window.getComputedStyle(infoBlock).left;
-    var ibStyle=window.getComputedStyle(infoBlock);
-    wrap.style.cssText='width:'+ibWidth+';padding:16px 0 16px;background:#efece9;flex-shrink:0;position:absolute;left:'+ibStyle.left+';box-sizing:border-box';
+    wrap.style.cssText='width:'+ibWidth+';padding:16px 0 16px;background:#efece9;flex-shrink:0;position:absolute;left:50%;transform:translateX(-50%);box-sizing:border-box';
     /* Position it right below the info block */
     var ibRect=infoBlock.getBoundingClientRect();
     var parentRect=infoBlock.offsetParent?infoBlock.offsetParent.getBoundingClientRect():{top:0};
