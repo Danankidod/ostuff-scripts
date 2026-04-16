@@ -147,6 +147,14 @@ body:has(#os-account) h2{
 .w-commerce-commercecartcloselink:hover{color:#fff!important}
 .w-commerce-commercecartemptystate{color:#555!important;font:400 10px/1.6 'Space Grotesk',sans-serif!important;letter-spacing:.1em!important;text-transform:uppercase!important}
 
+/* ═══ BLOG PAGE — DARK ═══ */
+body:has(#os-blog-list),body:has(#os-ig-feed){background:#0a0a0a!important}
+#os-blog-list{max-width:1100px;margin:0 auto;padding:0 24px}
+#os-blog-list h1{font:600 11px/1 'Space Grotesk',sans-serif!important;letter-spacing:.22em!important;text-transform:uppercase!important;color:#fff!important;font-size:11px!important;margin:100px 0 8px!important}
+#os-blog-list>p{font:400 10px/1.6 'Space Grotesk',sans-serif!important;color:#555!important;letter-spacing:.08em!important;margin:0 0 40px!important}
+body:has(#os-blog-list) h1,body:has(#os-blog-list) p{color:#fff!important}
+body:has(#os-blog-list) section{background:#0a0a0a!important}
+
 /* ═══ WISHLIST HEART ON CARDS ═══ */
 .os-wish-btn{transition:all .2s!important}
 .os-wish-btn:hover{background:rgba(255,255,255,.95)!important;box-shadow:0 2px 8px rgba(0,0,0,.1)!important;transform:scale(1.1)!important}
