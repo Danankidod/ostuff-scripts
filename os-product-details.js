@@ -12,14 +12,20 @@ var SECTIONS=[
 function inject(){
   if(document.getElementById('os-pd-wrap'))return;
 
-  /* Build the full-width accordion section */
-  var section=document.createElement('div');
-  section.id='os-pd-wrap';
-  section.style.cssText='width:100%;max-width:700px;margin:0 auto;padding:40px 24px;font-family:"Space Grotesk",sans-serif;background:#efece9;border-top:1px solid #e0ddd8';
+  /* FIX the right panel: flex column, not centered, scrollable */
+  var rightPanel=document.querySelector('.product-page_right');
+  if(rightPanel){
+    rightPanel.style.cssText+=';display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;overflow-y:auto!important';
+  }
+
+  /* Build accordion */
+  var wrap=document.createElement('div');
+  wrap.id='os-pd-wrap';
+  wrap.style.cssText='width:100%;padding:0;background:#efece9;flex-shrink:0';
 
   SECTIONS.forEach(function(sec){
     var row=document.createElement('div');
-    row.style.cssText='border-bottom:1px solid #ddd8d0';
+    row.style.cssText='border-bottom:1px solid #ddd8d0;padding:0 40px';
 
     var head=document.createElement('div');
     head.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:18px 0;cursor:pointer';
@@ -60,33 +66,22 @@ function inject(){
 
     row.appendChild(head);
     row.appendChild(panel);
-    section.appendChild(row);
+    wrap.appendChild(row);
   });
 
-  /* INSERT OUTSIDE the sticky panel — after the product section, before related products */
-  var productSection=document.querySelector('section.section_product-page');
-  if(!productSection){
-    /* Try finding by the wrapper class */
-    var wrapper=document.querySelector('.section_product-page_wrapper');
-    if(wrapper)productSection=wrapper.closest('section');
-  }
-  if(!productSection){
-    /* Last resort: find the section containing the product images */
-    var img=document.querySelector('.product-page_left');
-    if(img)productSection=img.closest('section');
+  /* Insert inside right panel, after the info block, before back-to-shop */
+  var target=document.querySelector('.div-block-15');
+  if(target&&target.parentNode){
+    target.parentNode.insertBefore(wrap,target);
+  }else if(rightPanel){
+    rightPanel.appendChild(wrap);
   }
 
-  if(productSection&&productSection.parentNode){
-    productSection.parentNode.insertBefore(section,productSection.nextSibling);
-    console.log('[OSTUFF] Product accordions inserted AFTER product section');
-  }else{
-    /* Absolute fallback */
-    var related=document.querySelector('.section_products');
-    if(related&&related.parentNode){
-      related.parentNode.insertBefore(section,related);
-      console.log('[OSTUFF] Product accordions inserted BEFORE related products');
-    }
-  }
+  /* Fix back to shop */
+  var db15=document.querySelector('.div-block-15');
+  if(db15)db15.style.cssText+=';padding:16px 40px;width:100%;box-sizing:border-box;flex-shrink:0';
+
+  console.log('[OSTUFF] Product accordions injected inside right panel');
 }
 
 function init(){setTimeout(inject,600)}
