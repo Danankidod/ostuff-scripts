@@ -47,6 +47,7 @@ function loadReviews(slug){
 }
 
 function renderReviews(reviews,slug){
+  if(document.getElementById('os-reviews'))return;
   var target=document.querySelector('.product_info-wrapper')||document.querySelector('[class*="product_detail"]');
   if(!target)target=document.querySelector('main')||document.body;
   var wrap=document.createElement('div');
@@ -132,6 +133,8 @@ function renderReviews(reviews,slug){
 }
 
 function init(){
+  if(window._osReviewsLoaded)return;
+  window._osReviewsLoaded=true;
   var slug=getSlug();
   if(!slug)return;
   setTimeout(function(){loadReviews(slug)},500);
