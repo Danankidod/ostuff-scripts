@@ -12,20 +12,18 @@ var SECTIONS=[
 function inject(){
   if(document.getElementById('os-pd-wrap'))return;
 
-  /* FIX the right panel: flex column, not centered, scrollable */
   var rightPanel=document.querySelector('.product-page_right');
-  if(rightPanel){
-    rightPanel.style.cssText+=';display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;overflow-y:auto!important;padding-top:40px!important';
-  }
   var infoBlock=document.querySelector('.product-page_info-block');
-  if(infoBlock){
-    infoBlock.style.cssText+=';left:10%;flex-shrink:0';
-  }
+  if(!infoBlock)return;
+
+  /* Center info block */
+  infoBlock.style.cssText+=';left:10%;flex-shrink:0';
 
   /* Build accordion */
   var wrap=document.createElement('div');
   wrap.id='os-pd-wrap';
-  wrap.style.cssText='width:100%;padding:0;background:#efece9;flex-shrink:0;position:relative;z-index:50';
+  var ibWidth=window.getComputedStyle(infoBlock).width;
+  wrap.style.cssText='width:'+ibWidth+';padding:16px 0;background:#efece9;position:absolute;left:10%;top:'+(infoBlock.offsetTop+infoBlock.offsetHeight)+'px;box-sizing:border-box';
 
   SECTIONS.forEach(function(sec){
     var row=document.createElement('div');
@@ -50,20 +48,14 @@ function inject(){
     panel.innerHTML='<div style="font:400 11px/1.7 \'Space Grotesk\',sans-serif;color:#999;letter-spacing:.03em">'+sec.body+'</div>';
 
     head.addEventListener('click',function(){
-      if(panel.style.display==='none'){
-        panel.style.display='block';
-        plus.textContent='\u2212';
-        titleSpan.style.color='#fff';
-        plus.style.color='#fff';
-      }else{
-        panel.style.display='none';
-        plus.textContent='+';
-        titleSpan.style.color='#666';
-        plus.style.color='#666';
-      }
+      var open=panel.style.display==='block';
+      panel.style.display=open?'none':'block';
+      plus.textContent=open?'+':'\u2212';
+      titleSpan.style.color=open?'#666':'#1a1a1a';
+      plus.style.color=open?'#666':'#1a1a1a';
     });
 
-    head.addEventListener('mouseenter',function(){titleSpan.style.color='#fff';plus.style.color='#fff'});
+    head.addEventListener('mouseenter',function(){titleSpan.style.color='#1a1a1a';plus.style.color='#1a1a1a'});
     head.addEventListener('mouseleave',function(){
       if(panel.style.display==='none'){titleSpan.style.color='#666';plus.style.color='#666'}
     });
@@ -73,29 +65,7 @@ function inject(){
     wrap.appendChild(row);
   });
 
-  /* Insert INSIDE the dark info block, at the very end */
-  var infoBlock=document.querySelector('.product-page_info-block');
-  if(infoBlock){
-    /* Match info block: width 80%, same horizontal position */
-    var ibWidth=window.getComputedStyle(infoBlock).width;
-    var ibLeft=window.getComputedStyle(infoBlock).left;
-    wrap.style.cssText='width:'+ibWidth+';padding:16px 0 16px;background:#efece9;flex-shrink:0;position:absolute;left:10%;box-sizing:border-box';
-    /* Position it right below the info block */
-    var ibRect=infoBlock.getBoundingClientRect();
-    var parentRect=infoBlock.offsetParent?infoBlock.offsetParent.getBoundingClientRect():{top:0};
-    wrap.style.top=(infoBlock.offsetTop+infoBlock.offsetHeight)+'px';
-    infoBlock.parentNode.appendChild(wrap);
-  }else{
-    var target=document.querySelector('.div-block-15');
-    if(target&&target.parentNode)target.parentNode.insertBefore(wrap,target);
-    else if(rightPanel)rightPanel.appendChild(wrap);
-  }
-
-  /* Fix back to shop */
-  var db15=document.querySelector('.div-block-15');
-  if(db15)db15.style.cssText+=';padding:16px 40px;width:100%;box-sizing:border-box;flex-shrink:0';
-
-  console.log('[OSTUFF] Product accordions injected inside right panel');
+  infoBlock.parentNode.appendChild(wrap);
 }
 
 function init(){setTimeout(inject,600)}
