@@ -15,13 +15,18 @@ function inject(){
   /* FIX the right panel: flex column, not centered, scrollable */
   var rightPanel=document.querySelector('.product-page_right');
   if(rightPanel){
-    rightPanel.style.cssText+=';display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;overflow-y:auto!important';
+    rightPanel.style.cssText+=';display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;overflow-y:auto!important;padding-top:40px!important';
+  }
+  /* Fix info block: no overlap */
+  var infoBlock=document.querySelector('.product-page_info-block');
+  if(infoBlock){
+    infoBlock.style.cssText+=';position:relative;z-index:1;flex-shrink:0;overflow:visible';
   }
 
   /* Build accordion */
   var wrap=document.createElement('div');
   wrap.id='os-pd-wrap';
-  wrap.style.cssText='width:100%;padding:0;background:#efece9;flex-shrink:0';
+  wrap.style.cssText='width:100%;padding:0;background:#efece9;flex-shrink:0;position:relative;z-index:50';
 
   SECTIONS.forEach(function(sec){
     var row=document.createElement('div');
