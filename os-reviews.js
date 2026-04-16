@@ -48,11 +48,12 @@ function loadReviews(slug){
 
 function renderReviews(reviews,slug){
   if(document.getElementById('os-reviews'))return;
-  var target=document.querySelector('.product_info-wrapper')||document.querySelector('[class*="product_detail"]');
+  /* Insert after the product section, before related products — full width */
+  var target=document.querySelector('.section_product-page_')||document.querySelector('[class*="section_product"]');
   if(!target)target=document.querySelector('main')||document.body;
   var wrap=document.createElement('div');
   wrap.id='os-reviews';
-  wrap.style.cssText='max-width:700px;margin:40px auto;padding:0 24px;font-family:"Space Grotesk",sans-serif';
+  wrap.style.cssText='max-width:700px;margin:0 auto;padding:40px 24px;font-family:"Space Grotesk",sans-serif';
   var avg=0;if(reviews.length)reviews.forEach(function(r){avg+=r.rating});
   if(reviews.length)avg=(avg/reviews.length).toFixed(1);
   var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;border-top:1px solid #e0ddd8;padding-top:24px">';
@@ -87,9 +88,9 @@ function renderReviews(reviews,slug){
     });
   }
   wrap.innerHTML=h;
-  var parent=target.parentNode;
-  if(parent)parent.insertBefore(wrap,target.nextSibling);
-  else document.body.appendChild(wrap);
+  /* Insert after the product page section, as a sibling — full width block */
+  if(target.nextSibling)target.parentNode.insertBefore(wrap,target.nextSibling);
+  else target.parentNode.appendChild(wrap);
   document.getElementById('os-review-toggle').addEventListener('click',function(){
     var f=document.getElementById('os-review-form');
     f.style.display=f.style.display==='none'?'block':'none';
