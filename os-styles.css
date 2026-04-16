@@ -7,8 +7,9 @@
   display:none!important;height:0!important;width:0!important;overflow:hidden!important;
   pointer-events:none!important;opacity:0!important;visibility:hidden!important;position:absolute!important;top:-9999px!important
 }
-body,html,.os-nav,.os-nav *,.os-nav-in,.os-nav-in *,#os-search-results,#os-search-results *{cursor:auto}
-a,button,[role="button"],.os-lk,.os-bk,.os-ar,.os-qc,.os-bar-icon{cursor:pointer}
+body,html,body *{cursor:auto!important}
+a,button,[role="button"],input,select,textarea,label,[tabindex]{cursor:pointer!important}
+a,button,[role="button"],.os-lk,.os-bk,.os-ar,.os-qc,.os-bar-icon,[class*="link"],[class*="button"]{cursor:pointer!important}
 .os-nav{position:fixed;top:52px;left:50%;transform:translateX(-50%);z-index:10000;width:min(700px,90vw);max-height:0;overflow:hidden;background:#0a0a0a;border:1px solid #1a1a1a;border-top:0;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0;border-radius:0 0 3px 3px}
 .os-nav.is-open{max-height:82vh;opacity:1;overflow-y:auto}
 .os-nav-in{padding:24px 28px}
@@ -61,6 +62,11 @@ a,button,[role="button"],.os-lk,.os-bk,.os-ar,.os-qc,.os-bar-icon{cursor:pointer
 .product_price-text{font:400 11px/1 'Space Grotesk',sans-serif!important;color:#555!important;letter-spacing:.06em!important}
 .products_item.shop_page.os-hide{opacity:0!important;transform:translateY(20px)!important}
 .products_item.shop_page.os-visible{opacity:1!important;transform:translateY(0)!important}
+
+/* ═══ RELATED PRODUCTS — constrain size on product page ═══ */
+.section_products_.product.similaires .products_list{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:0!important}
+.section_products_.product.similaires .products_item{width:100%!important}
+.section_products_.product.similaires .product-image{height:320px!important;object-fit:cover!important}
 .os-oos-overlay{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(239,236,233,.88);backdrop-filter:blur(2px);gap:16px;pointer-events:auto}
 .os-oos-overlay span{font:500 9px/1 'Space Grotesk',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#1a1a1a}
 .os-oos-btn{font:500 8px/1 'Space Grotesk',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#efece9;background:#1a1a1a;border:0;padding:10px 22px;cursor:pointer;transition:background .2s}
