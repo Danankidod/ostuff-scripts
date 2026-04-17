@@ -1,26 +1,52 @@
-/* ═══ OSTUFF NEWSLETTER — Popup → Supabase + Resend + Cookie ═══ */
+/* ═══ OSTUFF NEWSLETTER — Popup → Supabase + Resend ═══ */
+/* Rules:
+   - NOT logged in + never subscribed → show popup with 10% code
+   - Logged in + never subscribed → show popup WITHOUT 10% code
+   - Already subscribed (localStorage) → hide popup entirely
+*/
 (function(){
 var SUPA_URL='https://zxhamviljbwzbepvlwaj.supabase.co';
 var SUPA_KEY='sb_publishable_9rR3-q7Fon7IMNLEh5u48g_yV9jhSyX';
-var RESEND_ENDPOINT=SUPA_URL+'/functions/v1/send-welcome';
+var EDGE_URL=SUPA_URL+'/functions/v1/send-email';
 
-/* Hide popup if already subscribed */
-function hidePopupIfSubscribed(){
-  if(localStorage.getItem('os-subscribed')==='true'){
-    setTimeout(function(){
-      document.querySelectorAll('[class*="pop"],[class*="Pop"],[class*="newsletter"]').forEach(function(el){
-        if(el.querySelector('form'))el.style.display='none';
-      });
-    },500);
-    /* Also try to close via Webflow interaction */
-    setTimeout(function(){
-      document.querySelectorAll('[class*="pop"] [class*="close"],[class*="Pop"] [class*="close"],[class*="pop"] [class*="Close"]').forEach(function(btn){btn.click()});
-    },1000);
-  }
+function isSubscribed(){
+  return localStorage.getItem('os-subscribed')==='true';
+}
+
+function isLoggedIn(){
+  return window.osAuth&&typeof window.osAuth.getUser==='function';
+}
+
+function hidePopup(){
+  setTimeout(function(){
+    document.querySelectorAll('[class*="pop"],[class*="Pop"],[class*="newsletter"]').forEach(function(el){
+      if(el.querySelector('form'))el.style.display='none';
+    });
+  },500);
+  setTimeout(function(){
+    document.querySelectorAll('[class*="pop"] [class*="close"],[class*="Pop"] [class*="close"],[class*="pop"] [class*="Close"]').forEach(function(btn){btn.click()});
+  },1000);
 }
 
 function initNewsletter(){
-  hidePopupIfSubscribed();
+  /* Already subscribed → hide completely */
+  if(isSubscribed()){hidePopup();return}
+
+  /* Check if logged in to decide promo code */
+  var showPromo=true;
+  if(isLoggedIn()){
+    window.osAuth.getUser().then(function(user){
+      if(user){
+        showPromo=false;
+        /* Check if this user already used promo (has orders or is returning) */
+        /* For logged in users, hide the promo code mention in the popup */
+        var promoElements=document.querySelectorAll('[class*="pop"] [class*="promo"],[class*="pop"] [class*="code"],[class*="Pop"] [class*="promo"],[class*="Pop"] [class*="code"]');
+        promoElements.forEach(function(el){el.style.display='none'});
+      }
+    });
+  }
+
+  /* Intercept form submission */
   var forms=document.querySelectorAll('form');
   forms.forEach(function(form){
     var emailInput=form.querySelector('input[type="email"],input[name*="email"],input[placeholder*="email"]');
@@ -28,24 +54,28 @@ function initNewsletter(){
     if(!emailInput)return;
     var isPopup=form.closest('[class*="pop"]')||form.closest('[class*="newsletter"]')||form.closest('[class*="Pop"]');
     if(!isPopup)return;
+
     form.addEventListener('submit',function(e){
       var email=emailInput.value.trim();
       var phone=phoneInput?phoneInput.value.trim():'';
       if(!email)return;
+
       /* Mark as subscribed */
       localStorage.setItem('os-subscribed','true');
+
       /* Save to Supabase */
       fetch(SUPA_URL+'/rest/v1/subscribers',{
         method:'POST',
         headers:{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=minimal'},
-        body:JSON.stringify({email:email,phone:phone,source:'popup'})
-      }).then(function(){console.log('OS: subscriber saved')}).catch(function(){});
-      /* Trigger welcome email */
-      fetch(RESEND_ENDPOINT,{
+        body:JSON.stringify({email:email,phone:phone,source:'popup',promo_code:showPromo?'WELCOME10':null})
+      }).catch(function(){});
+
+      /* Send welcome email via Edge Function */
+      fetch(EDGE_URL,{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPA_KEY},
-        body:JSON.stringify({email:email})
-      }).then(function(){console.log('OS: welcome email sent')}).catch(function(){});
+        body:JSON.stringify({type:'welcome',email:email,data:{show_promo:showPromo}})
+      }).catch(function(){});
     });
   });
 }
