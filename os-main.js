@@ -1,5 +1,22 @@
 
 (function(){
+/* ═══ MADE TO ORDER — Replace "Out of stock" everywhere ═══ */
+function madeToOrder(){
+  document.querySelectorAll('*').forEach(function(el){
+    if(el.children.length===0&&/out of stock/i.test(el.textContent)){
+      el.textContent='MADE TO ORDER — 3-4 WEEKS';
+      el.style.cssText='font:500 9px/1 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#a09b93';
+    }
+  });
+  /* Re-enable disabled add-to-cart buttons */
+  document.querySelectorAll('[data-node-type="commerce-add-to-cart-button"][disabled],.w-commerce-commerceaddtocartbutton[disabled]').forEach(function(btn){
+    btn.disabled=false;
+    btn.style.opacity='1';
+    btn.style.cursor='pointer';
+  });
+}
+window.addEventListener('load',function(){setTimeout(madeToOrder,800);setTimeout(madeToOrder,2000)});
+
 document.addEventListener('DOMContentLoaded',function(){
 var B=document.getElementById('os-bar'),N=document.getElementById('os-nav');
 if(!B||!N)return;
@@ -37,7 +54,7 @@ if(sortBtn)sortBtn.addEventListener('click',function(){var sb=document.querySele
 function forceGrid(){document.querySelectorAll('[class*="All Collection wrapper"]').forEach(function(el){el.style.cssText='display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:0!important;width:100%!important'});document.querySelectorAll('.products_item').forEach(function(el){el.style.width='100%'})}
 forceGrid();window.addEventListener('load',function(){forceGrid();setTimeout(forceGrid,500);setTimeout(forceGrid,1500)});
 var gridWrap=document.querySelector('[class*="All Collection wrapper"]');
-if(gridWrap){new MutationObserver(function(){forceGrid()}).observe(gridWrap,{childList:true,attributes:true,attributeFilter:['style','class']})}
+if(gridWrap){var _gridTimer;new MutationObserver(function(){clearTimeout(_gridTimer);_gridTimer=setTimeout(forceGrid,100)}).observe(gridWrap,{childList:true,attributes:true,attributeFilter:['style','class']})}
 
 var bd=document.createElement('div');bd.id='os-filter-backdrop';document.body.appendChild(bd);
 var fm=document.querySelector('.filters6_filters-modal');

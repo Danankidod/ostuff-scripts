@@ -28,26 +28,8 @@ function styleBlogList(){
   });
 }
 
-/* Add Instagram section */
-function addInstagramSection(){
-  var target=document.getElementById('os-ig-feed');
-  if(!target){
-    target=document.createElement('div');
-    target.id='os-ig-feed';
-    target.style.cssText='max-width:1100px;margin:60px auto 40px;padding:0 24px';
-    var main=document.querySelector('main')||document.querySelector('.page-wrapper')||document.body;
-    var footer=document.querySelector('footer,.footer,.footer_');
-    if(footer)main.insertBefore(target,footer);
-    else main.appendChild(target);
-  }
-}
 
 setTimeout(function(){
   styleBlogList();
-  addInstagramSection();
-  /* Load Instagram script */
-  var s=document.createElement('script');
-  s.src='https://danankidod.github.io/ostuff-scripts/os-instagram.js';
-  document.body.appendChild(s);
 },500);
 })();

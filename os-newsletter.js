@@ -3,11 +3,9 @@
    - NOT logged in + never subscribed → show popup with 10% code
    - Logged in + never subscribed → show popup WITHOUT 10% code
    - Already subscribed (localStorage) → hide popup entirely
+   - Supabase client via window.osAuth (centralized in os-auth.js)
 */
 (function(){
-var SUPA_URL='https://zxhamviljbwzbepvlwaj.supabase.co';
-var SUPA_KEY='sb_publishable_9rR3-q7Fon7IMNLEh5u48g_yV9jhSyX';
-var EDGE_URL=SUPA_URL+'/functions/v1/send-email';
 
 function isSubscribed(){
   return localStorage.getItem('os-subscribed')==='true';
@@ -63,19 +61,14 @@ function initNewsletter(){
       /* Mark as subscribed */
       localStorage.setItem('os-subscribed','true');
 
-      /* Save to Supabase */
-      fetch(SUPA_URL+'/rest/v1/subscribers',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=minimal'},
-        body:JSON.stringify({email:email,phone:phone,source:'popup',promo_code:showPromo?'WELCOME10':null})
-      }).catch(function(){});
-
-      /* Send welcome email via Edge Function */
-      fetch(EDGE_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPA_KEY},
-        body:JSON.stringify({type:'welcome',email:email,data:{show_promo:showPromo}})
-      }).catch(function(){});
+      /* Save to Supabase via centralized client */
+      if(window.osAuth){
+        window.osAuth.initSupabase().then(function(c){
+          c.from('subscribers').insert({email:email,phone:phone,source:'popup',promo_code:showPromo?'WELCOME10':null}).then(function(){});
+          /* Send welcome email via Edge Function */
+          c.functions.invoke('send-email',{body:{type:'welcome',email:email,data:{show_promo:showPromo}}}).catch(function(){});
+        });
+      }
     });
   });
 }
