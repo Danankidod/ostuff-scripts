@@ -9,6 +9,10 @@ var SECTIONS=[
   {title:'AUTHENTICITY \u2014 GIMIQ\u00ae',body:'Every OSTUFF piece includes a digital authenticity passport powered by GIMIQ\u00ae blockchain.<br>NFC chip embedded \u2014 scan to verify instantly.<br>Ownership history & resale certificate included.'}
 ];
 
+/* Store all panels + heads for accordion behavior */
+var allPanels=[];
+var allHeads=[];
+
 function inject(){
   if(document.getElementById('os-pd-wrap'))return;
 
@@ -22,46 +26,69 @@ function inject(){
   wrap.id='os-pd-wrap';
 
   if(isMobile){
-    wrap.style.cssText='width:100%;padding:8px 0;background:#efece9;box-sizing:border-box';
+    wrap.style.cssText='width:100%;padding:8px 0;background:transparent;box-sizing:border-box';
   }else{
     var ibWidth=window.getComputedStyle(infoBlock).width;
     wrap.style.cssText='width:'+ibWidth+';padding:16px 0;background:#efece9;position:absolute;left:10%;top:'+(infoBlock.offsetTop+infoBlock.offsetHeight)+'px;box-sizing:border-box';
   }
 
-  SECTIONS.forEach(function(sec){
+  /* Mobile text colors */
+  var titleColor=isMobile?'#1a1a1a':'#666';
+  var iconColor=isMobile?'#1a1a1a':'#666';
+  var bodyColor=isMobile?'#666':'#999';
+
+  SECTIONS.forEach(function(sec,idx){
     var row=document.createElement('div');
-    row.style.cssText='border-bottom:1px solid #ddd8d0;padding:0 30px';
+    row.style.cssText='border-bottom:1px solid '+(isMobile?'#ddd':'#ddd8d0')+';padding:0 '+(isMobile?'16':'30')+'px';
 
     var head=document.createElement('div');
     head.style.cssText='display:flex;justify-content:space-between;align-items:center;padding:18px 0;cursor:pointer';
 
     var titleSpan=document.createElement('span');
     titleSpan.textContent=sec.title;
-    titleSpan.style.cssText='font:500 9px/1 "Space Grotesk",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#666';
+    titleSpan.style.cssText='font:500 9px/1 "Space Grotesk",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:'+titleColor;
 
     var plus=document.createElement('span');
     plus.textContent='+';
-    plus.style.cssText='font:400 16px/1 "Space Grotesk",sans-serif;color:#666;user-select:none';
+    plus.style.cssText='font:400 16px/1 "Space Grotesk",sans-serif;color:'+iconColor+';user-select:none';
 
     head.appendChild(titleSpan);
     head.appendChild(plus);
 
     var panel=document.createElement('div');
     panel.style.cssText='display:none;padding:0 0 18px';
-    panel.innerHTML='<div style="font:400 11px/1.7 \'Space Grotesk\',sans-serif;color:#999;letter-spacing:.03em">'+sec.body+'</div>';
+    panel.innerHTML='<div style="font:400 11px/1.7 \'Space Grotesk\',sans-serif;color:'+bodyColor+';letter-spacing:.03em">'+sec.body+'</div>';
+
+    /* Store refs for accordion behavior */
+    allPanels.push({panel:panel,plus:plus,titleSpan:titleSpan});
+    allHeads.push(head);
 
     head.addEventListener('click',function(){
       var open=panel.style.display==='block';
+
+      /* Close all other panels first (accordion) */
+      allPanels.forEach(function(item,i){
+        if(i!==idx && item.panel.style.display==='block'){
+          item.panel.style.display='none';
+          item.plus.textContent='+';
+          item.titleSpan.style.color=titleColor;
+          item.plus.style.color=iconColor;
+        }
+      });
+
+      /* Toggle this panel */
       panel.style.display=open?'none':'block';
       plus.textContent=open?'+':'\u2212';
-      titleSpan.style.color=open?'#666':'#1a1a1a';
-      plus.style.color=open?'#666':'#1a1a1a';
+      titleSpan.style.color=open?titleColor:'#1a1a1a';
+      plus.style.color=open?iconColor:'#1a1a1a';
     });
 
-    head.addEventListener('mouseenter',function(){titleSpan.style.color='#1a1a1a';plus.style.color='#1a1a1a'});
-    head.addEventListener('mouseleave',function(){
-      if(panel.style.display==='none'){titleSpan.style.color='#666';plus.style.color='#666'}
-    });
+    if(!isMobile){
+      head.addEventListener('mouseenter',function(){titleSpan.style.color='#1a1a1a';plus.style.color='#1a1a1a'});
+      head.addEventListener('mouseleave',function(){
+        if(panel.style.display==='none'){titleSpan.style.color=titleColor;plus.style.color=iconColor}
+      });
+    }
 
     row.appendChild(head);
     row.appendChild(panel);
